@@ -6,10 +6,6 @@ interface RequireAuthenticationUsecase {
 }
 
 //(user, password) -> auth tokens for oauth2
-interface AuthenticateUsecase<T, R> {
-    suspend fun authenticate(params: T): R
-}
-
-interface ProvideAuthDataUsecase<T> {
-    suspend fun get(): T
+interface AuthenticateUsecase<T> {
+    suspend fun authenticate(params: T): Boolean
 }

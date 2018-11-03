@@ -7,11 +7,13 @@ import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
 class CredentialsAuthenticateUsecase (
     private val authService: AuthenticationService<Credentials, AuthTokens>,
     private val tokenRepository: TokenRepository<AuthTokens>
-): AuthenticateUsecase<Credentials, AuthTokens> {
+): AuthenticateUsecase<Credentials> {
 
-    override suspend fun authenticate(params: Credentials): AuthTokens {
-        val tokens = authService.authenticate(params)
-        tokenRepository.store(tokens)
-        return tokens
+    override suspend fun authenticate(params: Credentials): Boolean {
+        val (success, tokens) = authService.authenticate(params)
+        if (success) {
+            tokenRepository.store(tokens)
+        }
+        return success
     }
 }

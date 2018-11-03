@@ -1,7 +1,8 @@
-package name.mharbovskyi.findchargingstation
+package name.mharbovskyi.findchargingstation.presentation.view
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import name.mharbovskyi.findchargingstation.R
 
 class MainActivity : AppCompatActivity() {
 

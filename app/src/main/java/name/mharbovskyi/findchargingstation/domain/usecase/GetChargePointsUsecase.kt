@@ -1,7 +1,12 @@
 package name.mharbovskyi.findchargingstation.domain.usecase
 
+import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
 import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
 
-class GetChargePointsUsecase {
-    fun getAll(): List<ChargePoint> = TODO()
+class GetChargePointsUsecase (
+    private val chargePointRepository: ChargePointRepository
+) {
+    suspend fun getAll(): List<ChargePoint> {
+        return chargePointRepository.getAll()
+    }
 }
