@@ -7,8 +7,3 @@ data class AuthTokens(
 )
 
 val EMPTY_TOKENS = AuthTokens("", "", 0)
-
-data class Credentials(
-    val username: String,
-    val password: String
-)

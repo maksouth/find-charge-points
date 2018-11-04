@@ -14,6 +14,10 @@ open class BaseViewModel(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
 
+    protected fun showError(throwable: Throwable?): Unit = TODO()
+    protected fun showLoading(): Unit = TODO()
+    protected fun hideLoading(): Unit = TODO()
+
     open fun destroy() {
         router = null
         coroutineContext.cancel()

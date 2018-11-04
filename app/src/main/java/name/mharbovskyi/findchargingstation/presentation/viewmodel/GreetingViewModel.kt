@@ -6,7 +6,7 @@ import name.mharbovskyi.findchargingstation.presentation.Router
 
 class GreetingViewModel(router: Router?): BaseViewModel(router) {
 
-    fun start() = launch {
+    fun load() = launch {
         delay(2000)
         router?.showChargePoints()
     }

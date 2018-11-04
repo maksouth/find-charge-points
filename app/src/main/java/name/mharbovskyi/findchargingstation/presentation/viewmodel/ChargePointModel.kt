@@ -12,7 +12,7 @@ class ChargePointModel(
     router: Router?
 ): BaseViewModel(router) {
 
-    fun start() = launch {
+    fun load() = launch {
         showLoading()
         val result = getChargePointsUsecase.getAll()
         hideLoading()
@@ -24,7 +24,4 @@ class ChargePointModel(
     }
 
     private fun showChargePoints(chargeStations: List<ChargePoint>): Unit = TODO()
-    private fun showError(throwable: Throwable?): Unit = TODO()
-    private fun showLoading(): Unit = TODO()
-    private fun hideLoading(): Unit = TODO()
 }
