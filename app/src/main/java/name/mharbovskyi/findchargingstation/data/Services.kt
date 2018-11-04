@@ -1,4 +1,4 @@
-package name.mharbovskyi.findchargingstation.domain
+package name.mharbovskyi.findchargingstation.data
 
 interface AuthenticationService<R, T> {
     suspend fun authenticate(credentials: R): Pair<Boolean, T>

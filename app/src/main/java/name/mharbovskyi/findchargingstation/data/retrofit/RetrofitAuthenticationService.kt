@@ -1,16 +1,16 @@
 package name.mharbovskyi.findchargingstation.data.retrofit
 
-import name.mharbovskyi.findchargingstation.domain.AuthenticationService
-import name.mharbovskyi.findchargingstation.domain.usecase.oauth.AuthTokens
-import name.mharbovskyi.findchargingstation.domain.usecase.oauth.Credentials
+import name.mharbovskyi.findchargingstation.data.AuthenticationService
+import name.mharbovskyi.findchargingstation.data.oauth.AuthTokens
+import name.mharbovskyi.findchargingstation.data.oauth.Credentials
 
 class RetrofitAuthenticationService(
-    private val authenticationService: NewMotionApi
+    private val api: NewMotionApi
 ): AuthenticationService<Credentials, AuthTokens> {
 
     override suspend fun authenticate(credentials: Credentials): Pair<Boolean, AuthTokens> {
 
-        return authenticationService.getAccessToken(
+        return api.getAccessToken(
             username = credentials.username,
             password = credentials.password
         ).await()

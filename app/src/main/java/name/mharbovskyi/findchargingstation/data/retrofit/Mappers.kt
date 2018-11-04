@@ -2,8 +2,8 @@ package name.mharbovskyi.findchargingstation.data.retrofit
 
 import name.mharbovskyi.findchargingstation.domain.entity.EMPTY_USER
 import name.mharbovskyi.findchargingstation.domain.entity.User
-import name.mharbovskyi.findchargingstation.domain.usecase.oauth.AuthTokens
-import name.mharbovskyi.findchargingstation.domain.usecase.oauth.EMPTY_TOKENS
+import name.mharbovskyi.findchargingstation.data.oauth.AuthTokens
+import name.mharbovskyi.findchargingstation.data.oauth.EMPTY_TOKENS
 import retrofit2.Response
 import java.time.Instant
 

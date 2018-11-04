@@ -1,8 +1,8 @@
-package name.mharbovskyi.findchargingstation.domain.usecase.oauth
+package name.mharbovskyi.findchargingstation.data.oauth
 
-import name.mharbovskyi.findchargingstation.domain.AuthenticationService
+import name.mharbovskyi.findchargingstation.data.AuthenticationService
 import name.mharbovskyi.findchargingstation.domain.TokenRepository
-import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
+import name.mharbovskyi.findchargingstation.data.AuthenticateUsecase
 
 class CredentialsAuthenticateUsecase (
     private val authService: AuthenticationService<Credentials, AuthTokens>,

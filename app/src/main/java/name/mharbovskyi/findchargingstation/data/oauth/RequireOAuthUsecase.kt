@@ -1,7 +1,7 @@
-package name.mharbovskyi.findchargingstation.domain.usecase.oauth
+package name.mharbovskyi.findchargingstation.data.oauth
 
-import name.mharbovskyi.findchargingstation.domain.TokenRepository
-import name.mharbovskyi.findchargingstation.domain.usecase.RequireAuthenticationUsecase
+import name.mharbovskyi.findchargingstation.data.RequireAuthenticationUsecase
+import name.mharbovskyi.findchargingstation.data.TokenRepository
 import java.time.Instant
 
 class RequireOAuthUsecase(

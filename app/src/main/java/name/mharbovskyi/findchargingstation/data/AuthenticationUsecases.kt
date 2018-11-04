@@ -1,4 +1,4 @@
-package name.mharbovskyi.findchargingstation.domain.usecase
+package name.mharbovskyi.findchargingstation.data
 
 // check if auth tokens exists and not expired
 interface RequireAuthenticationUsecase {

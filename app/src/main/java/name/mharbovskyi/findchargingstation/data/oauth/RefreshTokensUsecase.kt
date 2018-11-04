@@ -1,11 +1,11 @@
-package name.mharbovskyi.findchargingstation.domain.usecase.oauth
+package name.mharbovskyi.findchargingstation.data.oauth
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import name.mharbovskyi.findchargingstation.domain.RefreshAuthenticationService
-import name.mharbovskyi.findchargingstation.domain.TokenRepository
+import name.mharbovskyi.findchargingstation.data.RefreshAuthenticationService
+import name.mharbovskyi.findchargingstation.data.TokenRepository
 import java.time.Instant
 
 const val REFRESH_THRESHOLD_SEC = 5
@@ -31,18 +31,18 @@ class RefreshTokensUsecase (
         }
     }
 
-    suspend fun refreshNow(): Boolean {
-        val tokens = tokenRepository.get()
-        val (success, newTokens) = refreshAndSaveToken(tokens)
-
-        if (success)
-            refreshTokenJob?.let {
-                it.cancel()
-                startPeriodicRefresh()
-            }
-
-        return success
-    }
+//    suspend fun refreshNow(): Boolean {
+//        val tokens = tokenRepository.get()
+//        val (success, newTokens) = refreshAndSaveToken(tokens)
+//
+//        if (success)
+//            refreshTokenJob?.let {
+//                it.cancel()
+//                startPeriodicRefresh()
+//            }
+//
+//        return success
+//    }
 
     private suspend fun refreshAndSaveToken(tokens: AuthTokens): Pair<Boolean, AuthTokens> {
         val refreshDelay = tokens.expirationTimeSec - Instant.now().epochSecond - REFRESH_THRESHOLD_SEC

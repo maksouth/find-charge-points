@@ -1,4 +1,4 @@
-package name.mharbovskyi.findchargingstation.domain.usecase.oauth
+package name.mharbovskyi.findchargingstation.data.oauth
 
 data class AuthTokens(
     val accessToken: String,
