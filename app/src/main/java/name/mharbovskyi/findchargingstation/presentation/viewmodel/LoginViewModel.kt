@@ -2,16 +2,14 @@ package name.mharbovskyi.findchargingstation.presentation.viewmodel
 
 import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
-import name.mharbovskyi.findchargingstation.domain.entity.EMPTY_USER
-import name.mharbovskyi.findchargingstation.domain.entity.User
 import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
-import name.mharbovskyi.findchargingstation.domain.usecase.Failure
-import name.mharbovskyi.findchargingstation.domain.usecase.Success
+import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.toViewUser
 
 class LoginViewModel(
-    private var authenticateUsecase: AuthenticateUsecase,
+    private val authenticateUsecase: AuthenticateUsecase<UsernamePassword>,
+    private val getUserUsecase: GetUserUsecase,
     router: Router?
 ) : BaseViewModel(router) {
 
@@ -22,13 +20,15 @@ class LoginViewModel(
 
             showLoading()
             val result = authenticateUsecase.authenticate(credentials)
+            result.showErrorOr{ showGreeting() }
+        }
+    }
 
+    private suspend fun showGreeting() {
+        val userResult = getUserUsecase.getUser()
+        userResult.showErrorOr {
             hideLoading()
-
-            when (result) {
-                is Failure -> showError(result.error)
-                is Success -> router?.showGreeting(EMPTY_USER.toViewUser()) //todo
-            }
+            router?.showGreeting(it.toViewUser())
         }
     }
 

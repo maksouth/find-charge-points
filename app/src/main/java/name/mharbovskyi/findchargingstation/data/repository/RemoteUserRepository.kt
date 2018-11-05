@@ -12,7 +12,7 @@ import name.mharbovskyi.findchargingstation.domain.usecase.Result
 import name.mharbovskyi.findchargingstation.domain.usecase.flatMap
 import name.mharbovskyi.findchargingstation.domain.usecase.map
 
-class OAuthUserRepository (
+class RemoteUserRepository (
     private val api: NewMotionApi,
     private val tokenDatasource: TokenDatasource<AuthTokens>,
     private val refreshTokensService: RefreshTokensService
@@ -21,8 +21,8 @@ class OAuthUserRepository (
     override suspend fun getUser(): Result<User> {
         val tokens = tokenDatasource.get()
 
-        return tokens.isValid()
-            .map { api.getUser("Bearer ${tokens.accessToken}").await() }
+        return tokens.flatMap { it.isValid() }
+            .map { api.getUser("Bearer ${it.accessToken}").await() }
             .flatMap { it.toUserResult() }
             .also { refreshTokensService.startPeriodicRefresh() }
     }

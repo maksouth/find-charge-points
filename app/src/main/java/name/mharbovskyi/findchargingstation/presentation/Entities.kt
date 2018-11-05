@@ -29,6 +29,3 @@ data class ViewUser(val firstName: String, val lastName: String): Parcelable {
         }
     }
 }
-
-internal fun User.toViewUser() =
-        ViewUser(firstName, lastName)

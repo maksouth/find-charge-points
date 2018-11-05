@@ -27,3 +27,6 @@ fun <T> Result<T>.isFailure() = this is Failure
 object InvalidCredentialsTypeException: InvalidParameterException()
 object NoTokensException: NoSuchElementException()
 object AccessTokenExpired: IllegalStateException()
+
+object FailToGetUserException: Exception()
+object FailToGetPointsException: Exception()

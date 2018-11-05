@@ -1,4 +1,4 @@
-package name.mharbovskyi.findchargingstation.data
+package name.mharbovskyi.findchargingstation.data.repository
 
 import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
 import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint

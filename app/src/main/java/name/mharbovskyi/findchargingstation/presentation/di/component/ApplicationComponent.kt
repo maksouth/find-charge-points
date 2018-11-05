@@ -5,12 +5,16 @@ import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import name.mharbovskyi.findchargingstation.PointsApplication
 import name.mharbovskyi.findchargingstation.data.di.NetworkModule
+import name.mharbovskyi.findchargingstation.device.DeviceModule
+import name.mharbovskyi.findchargingstation.presentation.di.module.ActivityBuilder
 import name.mharbovskyi.findchargingstation.presentation.di.module.ApplicationModule
 
 @Component(modules = [
     AndroidInjectionModule::class,
     ApplicationModule::class,
-    NetworkModule::class
+    NetworkModule::class,
+    ActivityBuilder::class,
+    DeviceModule::class
 ])
 interface ApplicationComponent: AndroidInjector<PointsApplication> {
 

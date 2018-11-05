@@ -1,5 +1,8 @@
-package name.mharbovskyi.findchargingstation.data
+package name.mharbovskyi.findchargingstation.data.repository
 
+import name.mharbovskyi.findchargingstation.data.AuthTokens
+import name.mharbovskyi.findchargingstation.data.NewMotionApi
+import name.mharbovskyi.findchargingstation.data.TokenDatasource
 import name.mharbovskyi.findchargingstation.data.etc.RefreshTokensService
 import name.mharbovskyi.findchargingstation.data.etc.toAuthTokensResult
 import name.mharbovskyi.findchargingstation.domain.AuthRepository
@@ -8,7 +11,7 @@ import name.mharbovskyi.findchargingstation.domain.usecase.Failure
 import name.mharbovskyi.findchargingstation.domain.usecase.Result
 import name.mharbovskyi.findchargingstation.domain.usecase.Success
 
-class RemoteUserRepository(
+class OAuthRepository(
     private val api: NewMotionApi,
     private val tokenDatasource: TokenDatasource<AuthTokens>,
     private val refreshTokensService: RefreshTokensService

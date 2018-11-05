@@ -6,6 +6,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.data.AuthTokens
 import name.mharbovskyi.findchargingstation.data.TokenDatasource
+import name.mharbovskyi.findchargingstation.domain.usecase.Success
 import java.time.Instant
 
 const val REFRESH_THRESHOLD_SEC = 5
@@ -21,7 +22,7 @@ class RefreshTokensService (
 ) {
     private var refreshTokenJob: Job? = null
 
-    fun startPeriodicRefresh() {
+    suspend fun startPeriodicRefresh() {
 
         refreshTokenJob?.let { job ->
             if (job.isActive)
@@ -29,12 +30,16 @@ class RefreshTokensService (
         }
 
         refreshTokenJob = scope.launch {
-            var tokens = tokenDatasource.get()
-            while (true) {
-                val (success, newTokens) = refreshAndSaveToken(tokens)
+            var tokenResult = tokenDatasource.get()
+            if (tokenResult is Success) {
 
-                if (success) {
-                    tokens = newTokens
+                var tokens = tokenResult.data
+                while (true) {
+                    val (success, newTokens) = refreshAndSaveToken(tokens)
+
+                    if (success) {
+                        tokens = newTokens
+                    }
                 }
             }
         }

@@ -2,12 +2,10 @@ package name.mharbovskyi.findchargingstation.presentation.viewmodel
 
 import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
-import name.mharbovskyi.findchargingstation.domain.usecase.Failure
 import name.mharbovskyi.findchargingstation.domain.usecase.GetChargePointsUsecase
-import name.mharbovskyi.findchargingstation.domain.usecase.Success
 import name.mharbovskyi.findchargingstation.presentation.Router
 
-class ChargePointModel(
+class ChargePointViewModel(
     private val getChargePointsUsecase: GetChargePointsUsecase,
     router: Router?
 ): BaseViewModel(router) {
@@ -17,11 +15,8 @@ class ChargePointModel(
         val result = getChargePointsUsecase.getAll()
         hideLoading()
 
-        when(result) {
-            is Success -> showChargePoints(result.data)
-            is Failure -> showError(result.error)
-        }
+        result.showErrorOr { showChargePoints(it) }
     }
 
-    private fun showChargePoints(chargeStations: List<ChargePoint>): Unit = TODO()
+    private fun showChargePoints(chargePoints: List<ChargePoint>): Unit = TODO()
 }

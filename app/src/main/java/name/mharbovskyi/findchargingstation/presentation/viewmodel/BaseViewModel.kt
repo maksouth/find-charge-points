@@ -1,11 +1,19 @@
 package name.mharbovskyi.findchargingstation.presentation.viewmodel
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
+import name.mharbovskyi.findchargingstation.domain.usecase.Failure
+import name.mharbovskyi.findchargingstation.domain.usecase.Result
+import name.mharbovskyi.findchargingstation.domain.usecase.Success
 import name.mharbovskyi.findchargingstation.presentation.Router
+import name.mharbovskyi.findchargingstation.presentation.mapErrorToCode
 import kotlin.coroutines.CoroutineContext
+
+enum class LoadingState { SHOW, HIDE }
 
 open class BaseViewModel(
     protected var router: Router?
@@ -14,9 +22,25 @@ open class BaseViewModel(
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main + Job()
 
-    protected fun showError(throwable: Throwable?): Unit = TODO()
-    protected fun showLoading(): Unit = TODO()
-    protected fun hideLoading(): Unit = TODO()
+    private val _errors by lazy { MutableLiveData<Int>() }
+    val errors: LiveData<Int>
+        get() = _errors
+
+    private val _loading by lazy { MutableLiveData<LoadingState>() }
+    val loading: LiveData<LoadingState>
+        get() = _loading
+
+    protected fun showError(throwable: Throwable?): Unit = _errors.postValue(mapErrorToCode(throwable))
+    protected fun showLoading(): Unit = _loading.postValue(LoadingState.SHOW)
+    protected fun hideLoading(): Unit = _loading.postValue(LoadingState.HIDE)
+
+    suspend fun <T> Result<T>.showErrorOr(block: suspend (T) -> Unit) = when(this) {
+        is Failure -> {
+            hideLoading()
+            showError(error)
+        }
+        is Success -> block(data)
+    }
 
     open fun destroy() {
         router = null

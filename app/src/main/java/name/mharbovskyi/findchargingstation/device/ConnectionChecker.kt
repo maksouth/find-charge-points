@@ -3,7 +3,7 @@ package name.mharbovskyi.findchargingstation.device
 import kotlinx.coroutines.channels.ReceiveChannel
 
 interface ConnectionChecker {
-    fun updates(): ReceiveChannel<ConnectionState>
+    suspend fun updates(): ReceiveChannel<ConnectionState>
 }
 
 sealed class ConnectionState
