@@ -8,7 +8,7 @@ import name.mharbovskyi.findchargingstation.presentation.ViewUser
 
 class MainActivity : AppCompatActivity(), Router {
 
-    val chargePointsTransaction = "stations"
+    private val chargePointsTransaction = "stations"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

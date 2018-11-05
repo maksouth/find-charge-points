@@ -1,6 +1,6 @@
 package name.mharbovskyi.findchargingstation.data
 
-interface TokenRepository<T> {
+interface TokenDatasource<T> {
     suspend fun store(token: T)
     suspend fun get(): T
 }

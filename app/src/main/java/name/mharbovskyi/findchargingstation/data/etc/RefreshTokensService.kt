@@ -1,17 +1,21 @@
-package name.mharbovskyi.findchargingstation.data.oauth
+package name.mharbovskyi.findchargingstation.data.etc
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import name.mharbovskyi.findchargingstation.data.RefreshAuthenticationService
-import name.mharbovskyi.findchargingstation.data.TokenRepository
+import name.mharbovskyi.findchargingstation.data.AuthTokens
+import name.mharbovskyi.findchargingstation.data.TokenDatasource
 import java.time.Instant
 
 const val REFRESH_THRESHOLD_SEC = 5
 
-class RefreshTokensUsecase (
-    private val tokenRepository: TokenRepository<AuthTokens>,
+interface RefreshAuthenticationService<T, R> {
+    suspend fun refresh(data: T): Pair<Boolean, R>
+}
+
+class RefreshTokensService (
+    private val tokenDatasource: TokenDatasource<AuthTokens>,
     private val refreshAuthenticationService: RefreshAuthenticationService<AuthTokens, AuthTokens>,
     private val scope: CoroutineScope
 ) {
@@ -19,8 +23,13 @@ class RefreshTokensUsecase (
 
     fun startPeriodicRefresh() {
 
+        refreshTokenJob?.let { job ->
+            if (job.isActive)
+                job.cancel()
+        }
+
         refreshTokenJob = scope.launch {
-            var tokens = tokenRepository.get()
+            var tokens = tokenDatasource.get()
             while (true) {
                 val (success, newTokens) = refreshAndSaveToken(tokens)
 
@@ -32,7 +41,7 @@ class RefreshTokensUsecase (
     }
 
 //    suspend fun refreshNow(): Boolean {
-//        val tokens = tokenRepository.get()
+//        val tokens = tokenDatasource.get()
 //        val (success, newTokens) = refreshAndSaveToken(tokens)
 //
 //        if (success)
@@ -51,7 +60,7 @@ class RefreshTokensUsecase (
         val (success, newTokens) = refreshAuthenticationService.refresh(tokens)
 
         if (success) {
-            tokenRepository.store(tokens)
+            tokenDatasource.store(tokens)
         }
 
         return Pair(success, newTokens)

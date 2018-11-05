@@ -3,8 +3,8 @@ package name.mharbovskyi.findchargingstation.data.di
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import dagger.Module
 import dagger.Provides
-import name.mharbovskyi.findchargingstation.data.retrofit.BASE_URL
-import name.mharbovskyi.findchargingstation.data.retrofit.NewMotionApi
+import name.mharbovskyi.findchargingstation.data.BASE_URL
+import name.mharbovskyi.findchargingstation.data.NewMotionApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit

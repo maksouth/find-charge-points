@@ -8,8 +8,11 @@ interface ChargePointRepository {
     suspend fun getAll(): Result<List<ChargePoint>>
 }
 
-interface UserRepository<T: Credentials> {
+interface UserRepository {
     suspend fun getUser(): Result<User>
+}
+
+interface AuthRepository<T: Credentials> {
     suspend fun authenticate(credentials: T): Result<Unit>
 }
 

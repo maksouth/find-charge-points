@@ -2,13 +2,13 @@ package name.mharbovskyi.findchargingstation.domain.usecase
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import name.mharbovskyi.findchargingstation.domain.Credentials
-import name.mharbovskyi.findchargingstation.domain.UserRepository
+import name.mharbovskyi.findchargingstation.domain.AuthRepository
+import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 
-class AuthenticateUsecase(private val userRepository: UserRepository<Credentials>) {
+class AuthenticateUsecase(private val authRepository: AuthRepository<UsernamePassword>) {
 
-    suspend fun authenticate(credentials: Credentials): Result<Unit> =
+    suspend fun authenticate(usernamePassword: UsernamePassword): Result<Unit> =
         withContext(Dispatchers.IO) {
-            userRepository.authenticate(credentials)
+            authRepository.authenticate(usernamePassword)
         }
 }

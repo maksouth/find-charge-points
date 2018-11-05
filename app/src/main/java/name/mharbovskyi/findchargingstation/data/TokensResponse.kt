@@ -1,6 +1,6 @@
-package name.mharbovskyi.findchargingstation.data.retrofit
+package name.mharbovskyi.findchargingstation.data
 
-data class Responses(
+data class TokensResponse(
     val tokenType: String,
     val accessToken: String,
     val refreshToken: String,
