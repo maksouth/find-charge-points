@@ -30,9 +30,8 @@ class GreetingFragment : DaggerFragment() {
     ): View? =
         inflater.inflate(R.layout.fragment_greeting, container, false)
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             first_name.text = it.getString(FIRST_NAME)
             last_name.text = it.getString(LAST_NAME)

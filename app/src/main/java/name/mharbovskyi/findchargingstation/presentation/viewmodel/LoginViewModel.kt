@@ -1,6 +1,7 @@
 package name.mharbovskyi.findchargingstation.presentation.viewmodel
 
 import kotlinx.coroutines.launch
+import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
 import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
@@ -32,8 +33,16 @@ class LoginViewModel(
         }
     }
 
-    private fun validUsername(username: String): Boolean = TODO()
+    private fun validUsername(username: String): Boolean =
+        username.isNotBlank()
+            .also {
+                if(!it) showError(R.string.error_bad_format_username)
+            }
 
-    private fun validPassword(password: String): Boolean = TODO()
+    private fun validPassword(password: String): Boolean =
+        password.isNotBlank()
+            .also {
+                if (!it) showError(R.string.error_bad_format_password)
+            }
 
 }

@@ -26,10 +26,16 @@ class ChargePointsFragment : DaggerFragment() {
         return inflater.inflate(R.layout.fragment_charge_stations, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         viewModel.load()
+
+        viewModel.points.observe(this, Observer {
+            Log.d(TAG, "New points received $it")
+        })
+
         subscribeToEvents()
+
     }
 
     override fun onDestroy() {

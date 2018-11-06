@@ -26,8 +26,8 @@ class LoginFragment : DaggerFragment() {
         return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         login_button.setOnClickListener {
             viewModel.authenticate(username_field.text.toString(), password_field.text.toString())

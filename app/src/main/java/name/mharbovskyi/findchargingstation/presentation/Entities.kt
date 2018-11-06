@@ -2,7 +2,6 @@ package name.mharbovskyi.findchargingstation.presentation
 
 import android.os.Parcel
 import android.os.Parcelable
-import name.mharbovskyi.findchargingstation.domain.entity.User
 
 data class ViewUser(val firstName: String, val lastName: String): Parcelable {
     constructor(parcel: Parcel) : this(

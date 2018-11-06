@@ -2,9 +2,9 @@ package name.mharbovskyi.findchargingstation.presentation.viewmodel
 
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.device.CONNECTED
 import name.mharbovskyi.findchargingstation.device.ConnectionChecker
-import name.mharbovskyi.findchargingstation.device.ConnectionState
 import name.mharbovskyi.findchargingstation.device.DISCONNECTED
 import name.mharbovskyi.findchargingstation.domain.usecase.Failure
 import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
@@ -26,8 +26,8 @@ class MainViewModel(
         hideLoading()
 
         when(result) {
-            is Success -> router?.showGreeting(result.data.toViewUser())
-            is Failure -> onGetUserError(result.error)
+            is Success -> router?.showChargePoints()
+            is Failure -> router?.showAuthentication()
         }
     }
 
@@ -46,18 +46,10 @@ class MainViewModel(
     }
 
     private fun infoConnected() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showInfo(R.string.info_connected)
     }
 
     private fun infoDisconnected() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        showInfo(R.string.info_disconnected)
     }
-
-    private fun onGetUserError(throwable: Throwable?) {
-        if (isAuthenticationError(throwable)) {
-            router?.showAuthentication()
-        } else showError(throwable)
-    }
-
-    private fun isAuthenticationError(throwable: Throwable?): Boolean = TODO()
 }
