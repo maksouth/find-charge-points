@@ -1,21 +1,17 @@
 package name.mharbovskyi.findchargingstation.data.di
 
-import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import name.mharbovskyi.findchargingstation.data.AuthTokens
 import name.mharbovskyi.findchargingstation.data.NewMotionApi
-import name.mharbovskyi.findchargingstation.data.PreferencesTokenDatasource
-import name.mharbovskyi.findchargingstation.data.TokenDatasource
-import name.mharbovskyi.findchargingstation.data.etc.RefreshTokensService
 import name.mharbovskyi.findchargingstation.data.repository.LocalChargePointsRepository
 import name.mharbovskyi.findchargingstation.data.repository.OAuthRepository
 import name.mharbovskyi.findchargingstation.data.repository.RemoteUserRepository
+import name.mharbovskyi.findchargingstation.data.token.AuthTokens
+import name.mharbovskyi.findchargingstation.data.token.TokenProvider
 import name.mharbovskyi.findchargingstation.domain.AuthRepository
 import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
 import name.mharbovskyi.findchargingstation.domain.UserRepository
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
-import javax.inject.Singleton
 
 @Module
 class RepositoryModule {
@@ -26,25 +22,19 @@ class RepositoryModule {
 
     @Provides
     fun provideOAuthRepository(
-        newMotionApi: NewMotionApi,
-        refreshTokensService: RefreshTokensService,
-        tokenDatasource: TokenDatasource<AuthTokens>
-    ): AuthRepository<UsernamePassword> =
-            OAuthRepository(newMotionApi, tokenDatasource, refreshTokensService)
+        newMotionApi: NewMotionApi
+    ): AuthRepository<UsernamePassword, AuthTokens> =
+            OAuthRepository(newMotionApi)
 
     @Provides
     fun provideRemoteUserRepository(
         newMotionApi: NewMotionApi,
-        refreshTokensService: RefreshTokensService,
-        tokenDatasource: TokenDatasource<AuthTokens>
+        tokenProvider: TokenProvider
     ): UserRepository =
-            RemoteUserRepository(newMotionApi, tokenDatasource, refreshTokensService)
-
-    @Singleton
-    @Provides
-    fun provideTokenDatasource(
-        preferences: SharedPreferences
-    ): TokenDatasource<AuthTokens> =
-        PreferencesTokenDatasource(preferences)
-
+            RemoteUserRepository(newMotionApi, tokenProvider)
 }
+
+const val PROVIDER_COMPOSITE = "composite_provider"
+const val PROVIDER_REFRESHED = "refreshed_provider"
+const val PROVIDER_PREFERENCES = "preferences_provider"
+const val PROVIDER_LOGIN = "login_provider"

@@ -3,6 +3,7 @@ package name.mharbovskyi.findchargingstation.presentation.view
 import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import android.util.Log
 import android.view.View
 import dagger.android.support.DaggerAppCompatActivity
@@ -15,10 +16,10 @@ import name.mharbovskyi.findchargingstation.presentation.viewmodel.MainViewModel
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), Router, EventDisplayer {
-
     private val TAG = MainActivity::class.java.simpleName
 
     private val chargePointsTransaction = "stations"
+    private val authenticationTransaction = "authentication"
 
     @Inject
     lateinit var viewModel: MainViewModel
@@ -48,6 +49,7 @@ class MainActivity : DaggerAppCompatActivity(), Router, EventDisplayer {
     override fun showAuthentication() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, LoginFragment())
+            .addToBackStack(authenticationTransaction)
             .commit()
     }
 
@@ -59,8 +61,13 @@ class MainActivity : DaggerAppCompatActivity(), Router, EventDisplayer {
         } else {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, ChargePointsFragment(), ChargePointsFragment::class.java.simpleName)
+                .addToBackStack(chargePointsTransaction)
                 .commit()
         }
+    }
+
+    override fun hideAuthentication() {
+        supportFragmentManager.popBackStack(authenticationTransaction, POP_BACK_STACK_INCLUSIVE)
     }
 
     override fun showGreeting(user: ViewUser) {

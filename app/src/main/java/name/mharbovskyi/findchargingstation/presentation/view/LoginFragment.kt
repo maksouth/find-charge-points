@@ -36,7 +36,7 @@ class LoginFragment : DaggerFragment() {
         subscribeToEvents()
     }
 
-    fun subscribeToEvents() {
+    private fun subscribeToEvents() {
         viewModel.errors.observe(this, Observer{ resId ->
             if (resId != null) Log.d(TAG, getString(resId))
         })

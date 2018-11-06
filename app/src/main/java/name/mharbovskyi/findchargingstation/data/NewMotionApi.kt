@@ -1,6 +1,7 @@
 package name.mharbovskyi.findchargingstation.data
 
 import kotlinx.coroutines.Deferred
+import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -25,7 +26,7 @@ interface NewMotionApi {
 
 
     //todo
-    fun refreshAccessToken()
+    fun refreshAccessToken(): Deferred<Response<TokensResponse>>
 
     @FormUrlEncoded
     @POST(ENDPOINT_PROFILE)

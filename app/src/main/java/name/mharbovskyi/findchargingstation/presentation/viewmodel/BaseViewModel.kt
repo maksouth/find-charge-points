@@ -7,9 +7,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
-import name.mharbovskyi.findchargingstation.domain.usecase.Failure
-import name.mharbovskyi.findchargingstation.domain.usecase.Result
-import name.mharbovskyi.findchargingstation.domain.usecase.Success
+import name.mharbovskyi.findchargingstation.domain.entity.Failure
+import name.mharbovskyi.findchargingstation.domain.entity.Result
+import name.mharbovskyi.findchargingstation.domain.entity.Success
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.mapErrorToCode
 import kotlin.coroutines.CoroutineContext
@@ -46,7 +46,10 @@ open class BaseViewModel(
             hideLoading()
             showError(error)
         }
-        is Success -> block(data)
+        is Success -> {
+            hideLoading()
+            block(data)
+        }
     }
 
     open fun destroy() {

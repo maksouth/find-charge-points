@@ -6,9 +6,9 @@ import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.device.CONNECTED
 import name.mharbovskyi.findchargingstation.device.ConnectionChecker
 import name.mharbovskyi.findchargingstation.device.DISCONNECTED
-import name.mharbovskyi.findchargingstation.domain.usecase.Failure
+import name.mharbovskyi.findchargingstation.domain.entity.Failure
 import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
-import name.mharbovskyi.findchargingstation.domain.usecase.Success
+import name.mharbovskyi.findchargingstation.domain.entity.Success
 import name.mharbovskyi.findchargingstation.presentation.Router
 
 class MainViewModel(

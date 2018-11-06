@@ -2,7 +2,7 @@ package name.mharbovskyi.findchargingstation.domain
 
 import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
 import name.mharbovskyi.findchargingstation.domain.entity.User
-import name.mharbovskyi.findchargingstation.domain.usecase.Result
+import name.mharbovskyi.findchargingstation.domain.entity.Result
 
 interface ChargePointRepository {
     suspend fun getAll(): Result<List<ChargePoint>>
@@ -12,8 +12,8 @@ interface UserRepository {
     suspend fun getUser(): Result<User>
 }
 
-interface AuthRepository<T: Credentials> {
-    suspend fun authenticate(credentials: T): Result<Unit>
+interface AuthRepository<T: Credentials, R> {
+    suspend fun authenticate(credentials: T): Result<R>
 }
 
 sealed class Credentials

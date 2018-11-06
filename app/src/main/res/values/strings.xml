@@ -14,4 +14,5 @@
     <string name="info_connected">Back online</string>
     <string name="info_disconnected">You are offline</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

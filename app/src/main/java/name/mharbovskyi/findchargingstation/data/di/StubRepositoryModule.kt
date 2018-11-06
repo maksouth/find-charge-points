@@ -4,21 +4,22 @@ import android.util.Log
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.delay
+import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.AuthRepository
 import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
 import name.mharbovskyi.findchargingstation.domain.UserRepository
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
 import name.mharbovskyi.findchargingstation.domain.entity.User
-import name.mharbovskyi.findchargingstation.domain.usecase.Failure
-import name.mharbovskyi.findchargingstation.domain.usecase.Result
-import name.mharbovskyi.findchargingstation.domain.usecase.Success
+import name.mharbovskyi.findchargingstation.domain.entity.Failure
+import name.mharbovskyi.findchargingstation.domain.entity.Result
+import name.mharbovskyi.findchargingstation.domain.entity.Success
 import java.lang.Exception
 import kotlin.random.Random
 
 @Module
 class StubRepositoryModule {
-    @Provides fun provideAuthRepository(): AuthRepository<UsernamePassword> = StubAuthRepository()
+    @Provides fun provideAuthRepository(): AuthRepository<UsernamePassword, AuthTokens> = StubAuthRepository()
     @Provides fun provideChargePointsRepository(): ChargePointRepository = StubChargePointsRepository()
     @Provides fun provideUserRepository(): UserRepository = StubUserRepository()
 }
@@ -32,12 +33,12 @@ private fun <T> randomErrorOr(block: () -> T): Result<T> =
         Success(block())
     } else Failure(Exception())
 
-class StubAuthRepository: AuthRepository<UsernamePassword> {
-    override suspend fun authenticate(credentials: UsernamePassword): Result<Unit> {
+class StubAuthRepository: AuthRepository<UsernamePassword, AuthTokens> {
+    override suspend fun authenticate(credentials: UsernamePassword): Result<AuthTokens> {
         log("start auth")
         delay(5000)
         log("finish auth")
-        return  randomErrorOr { Unit }
+        return  randomErrorOr { AuthTokens("access", "refresh", 5004) }
     }
 }
 
