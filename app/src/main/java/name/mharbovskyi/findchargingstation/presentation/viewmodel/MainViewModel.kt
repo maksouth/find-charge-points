@@ -10,7 +10,6 @@ import name.mharbovskyi.findchargingstation.domain.usecase.Failure
 import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
 import name.mharbovskyi.findchargingstation.domain.usecase.Success
 import name.mharbovskyi.findchargingstation.presentation.Router
-import name.mharbovskyi.findchargingstation.presentation.toViewUser
 
 class MainViewModel(
     private val getUserUsecase: GetUserUsecase,

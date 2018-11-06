@@ -12,16 +12,28 @@ class ChargePointViewModel(
     router: Router?
 ): BaseViewModel(router) {
 
+    private val TAG = ChargePointViewModel::class.java.simpleName
+
     private val _points by lazy { MutableLiveData<List<ChargePoint>>() }
     val points: LiveData<List<ChargePoint>>
         get() = _points
 
-    fun load() = launch {
-        showLoading()
-        val result = getChargePointsUsecase.getAll()
-        hideLoading()
+    fun load() {
+        launch {
+            showLoading()
+            val result = getChargePointsUsecase.getAll()
+            hideLoading()
 
-        result.showErrorOr { showChargePoints(it) }
+            result.showErrorOr { showChargePoints(it) }
+
+//            coroutineScope {
+//                var counter = 0
+//                while (true) {
+//                    Log.d(TAG, "HIIIIIIIIII ${counter++}")
+//                    delay(2000)
+//                }
+//            }
+        }
     }
 
     private fun showChargePoints(chargePoints: List<ChargePoint>) {

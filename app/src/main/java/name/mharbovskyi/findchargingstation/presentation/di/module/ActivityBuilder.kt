@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.android.ContributesAndroidInjector
 import name.mharbovskyi.findchargingstation.data.di.StubRepositoryModule
 import name.mharbovskyi.findchargingstation.domain.di.UsecaseModule
+import name.mharbovskyi.findchargingstation.presentation.EventDisplayer
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.view.MainActivity
 
@@ -26,4 +27,8 @@ class ActivityModule {
     @Provides
     fun provideRouter(mainActivity: MainActivity): Router =
         mainActivity
+
+    @Provides
+    fun provideEventDisplayer(mainActivity: MainActivity): EventDisplayer =
+            mainActivity
 }

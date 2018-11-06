@@ -35,7 +35,7 @@ private fun <T> randomErrorOr(block: () -> T): Result<T> =
 class StubAuthRepository: AuthRepository<UsernamePassword> {
     override suspend fun authenticate(credentials: UsernamePassword): Result<Unit> {
         log("start auth")
-        delay(2000)
+        delay(5000)
         log("finish auth")
         return  randomErrorOr { Unit }
     }
@@ -44,7 +44,7 @@ class StubAuthRepository: AuthRepository<UsernamePassword> {
 class StubChargePointsRepository: ChargePointRepository {
     override suspend fun getAll(): Result<List<ChargePoint>> {
         log("start getting charge points")
-        delay(2000)
+        delay(5000)
         log("return charge points")
         return randomErrorOr {
             listOf(
@@ -59,7 +59,7 @@ class StubChargePointsRepository: ChargePointRepository {
 class StubUserRepository: UserRepository {
     override suspend fun getUser(): Result<User> {
         log("start getting user")
-        delay(2000)
+        delay(5000)
         log("return user")
         return randomErrorOr { User("1", "Maksym", "Harbovskyi") }
     }
