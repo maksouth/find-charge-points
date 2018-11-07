@@ -1,10 +1,10 @@
 package name.mharbovskyi.findchargingstation.data
 
 data class TokensResponse(
-    val tokenType: String,
-    val accessToken: String,
-    val refreshToken: String,
-    val expiresIn: Int
+    val token_type: String,
+    val access_token: String,
+    val refresh_token: String,
+    val expires_in: Int
 )
 
 data class UserResponse(
@@ -27,8 +27,4 @@ data class RawChargePoint(
     val id: String,
     val address: String,
     val connectors: Any
-)
-
-data class RawChargePointsList(
-    val list: List<RawChargePoint>
 )

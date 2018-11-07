@@ -7,7 +7,9 @@ import name.mharbovskyi.findchargingstation.PointsApplication
 import name.mharbovskyi.findchargingstation.data.di.NetworkModule
 import name.mharbovskyi.findchargingstation.presentation.di.module.ActivityBuilder
 import name.mharbovskyi.findchargingstation.presentation.di.module.ApplicationModule
+import javax.inject.Singleton
 
+@Singleton
 @Component(modules = [
     AndroidInjectionModule::class,
     ApplicationModule::class,

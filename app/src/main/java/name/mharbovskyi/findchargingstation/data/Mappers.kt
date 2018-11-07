@@ -16,9 +16,9 @@ internal fun RawChargePoint.toChargePoint(): ChargePoint =
 internal fun Response<TokensResponse>.toAuthTokensResult(): Result<AuthTokens> =
     baseParseResponse(this) {
         AuthTokens(
-            accessToken = accessToken,
-            refreshToken = refreshToken,
-            expirationTimeSec = expiresIn.absoluteTimeSec
+            accessToken = access_token,
+            refreshToken = refresh_token,
+            expirationTimeSec = expires_in.absoluteTimeSec
         )
     } ?: Failure(GetTokenException())
 

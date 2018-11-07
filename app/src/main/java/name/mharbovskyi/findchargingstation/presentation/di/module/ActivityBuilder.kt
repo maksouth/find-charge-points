@@ -3,6 +3,7 @@ package name.mharbovskyi.findchargingstation.presentation.di.module
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import name.mharbovskyi.findchargingstation.data.di.RepositoryModule
 import name.mharbovskyi.findchargingstation.data.di.StubRepositoryModule
 import name.mharbovskyi.findchargingstation.domain.di.UsecaseModule
 import name.mharbovskyi.findchargingstation.presentation.EventDisplayer
@@ -16,6 +17,7 @@ abstract class ActivityBuilder {
         FragmentsProvider::class,
         ViewModelModule::class,
         StubRepositoryModule::class,
+        RepositoryModule::class,
         UsecaseModule::class,
         ActivityModule::class
     ])

@@ -13,11 +13,11 @@ import kotlin.random.Random
 
 @Module
 class StubRepositoryModule {
-    @Provides fun provideAuthRepository(): AuthRepository<UsernamePassword, AuthTokens> = StubAuthRepository()
-    @Provides fun provideChargePointsRepository(): ChargePointRepository = StubChargePointsRepository()
+//    @Provides fun provideAuthRepository(): AuthRepository<UsernamePassword, AuthTokens> = StubAuthRepository()
+    //@Provides fun provideChargePointsRepository(): ChargePointRepository = StubChargePointsRepository()
     @Provides fun provideUserRepository(): UserRepository = StubUserRepository()
     @Provides fun provideCommunication(): Communication<Result<AuthTokens>> = StubCommunication()
-    @Provides fun provideRequireAuthRepository(): RequireAuthenticationRepository = StubRequireAuthRepository()
+    //@Provides fun provideRequireAuthRepository(): RequireAuthenticationRepository = StubRequireAuthRepository()
 }
 
 const val TAG = "STUB_TAG"
