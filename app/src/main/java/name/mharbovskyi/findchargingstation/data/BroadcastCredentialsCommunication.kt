@@ -1,10 +1,9 @@
-package name.mharbovskyi.findchargingstation.device
+package name.mharbovskyi.findchargingstation.data
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import name.mharbovskyi.findchargingstation.data.Communication
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine

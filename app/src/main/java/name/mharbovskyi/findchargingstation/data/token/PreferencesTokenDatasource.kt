@@ -8,7 +8,7 @@ import name.mharbovskyi.findchargingstation.domain.entity.Success
 
 class PreferencesTokenDatasource (
     private val sharedPreferences: SharedPreferences
-): TokenProvider, TokenConsumer {
+): TokenProvider<AuthTokens>, TokenConsumer<AuthTokens> {
 
     override suspend fun get(): Result<AuthTokens> {
         val accessToken = sharedPreferences.getString(

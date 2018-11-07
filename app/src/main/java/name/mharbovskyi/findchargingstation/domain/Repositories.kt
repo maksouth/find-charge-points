@@ -16,5 +16,9 @@ interface AuthRepository<T: Credentials, R> {
     suspend fun authenticate(credentials: T): Result<R>
 }
 
+interface RequireAuthenticationRepository {
+    suspend fun requireAuthentication(): Result<Unit>
+}
+
 sealed class Credentials
 data class UsernamePassword(val username: String, val password: String): Credentials()

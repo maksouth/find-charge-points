@@ -21,7 +21,7 @@ open class BaseViewModel(
 ): CoroutineScope {
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + Job()
+        get() = Dispatchers.IO + Job()
 
     private val _errors by lazy { MutableLiveData<Int>() }
     val errors: LiveData<Int>

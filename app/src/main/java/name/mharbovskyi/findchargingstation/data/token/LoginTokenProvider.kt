@@ -7,7 +7,7 @@ import name.mharbovskyi.findchargingstation.presentation.Router
 class LoginTokenProvider(
     private var router: Router?,
     private val communication: Communication<Result<AuthTokens>>
-): TokenProvider {
+): TokenProvider<AuthTokens> {
 
     override suspend fun get(): Result<AuthTokens> {
         router?.showAuthentication()

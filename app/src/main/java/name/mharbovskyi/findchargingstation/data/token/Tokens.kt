@@ -2,10 +2,10 @@ package name.mharbovskyi.findchargingstation.data.token
 
 import name.mharbovskyi.findchargingstation.domain.entity.Result
 
-interface TokenProvider {
-    suspend fun get(): Result<AuthTokens>
+interface TokenProvider<T> {
+    suspend fun get(): Result<T>
 }
 
-interface TokenConsumer {
-    suspend fun consume(tokens: AuthTokens)
+interface TokenConsumer<T> {
+    suspend fun consume(tokens: T)
 }

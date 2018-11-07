@@ -36,7 +36,6 @@ class ChargePointViewModel(
         }
     }
 
-    private fun showChargePoints(chargePoints: List<ChargePoint>) {
-        _points.value = chargePoints
-    }
+    private fun showChargePoints(chargePoints: List<ChargePoint>) =
+        _points.postValue(chargePoints)
 }
