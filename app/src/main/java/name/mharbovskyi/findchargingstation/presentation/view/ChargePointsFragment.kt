@@ -10,8 +10,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.LatLngBounds
 import dagger.android.support.DaggerFragment
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
@@ -45,13 +44,7 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         viewModel.load()
-
-        viewModel.points.observe(this, Observer {
-            Log.d(TAG, "New points received $it")
-        })
-
         subscribeToEvents()
-
     }
 
     override fun onDestroy() {
@@ -62,10 +55,17 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
     override fun onMapReady(map: GoogleMap) {
         googleMap = map
 
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        viewModel.points.observe(this, Observer {
+            Log.d(TAG, "New points received $it")
+            val bounds = LatLngBounds.Builder()
+
+            it?.forEach { marker ->
+                googleMap.addMarker(marker)
+                bounds.include(marker.position)
+            }
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
+        })
     }
 
     fun subscribeToEvents() {

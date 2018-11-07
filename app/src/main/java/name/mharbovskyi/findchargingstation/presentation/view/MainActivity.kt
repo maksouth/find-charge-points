@@ -31,16 +31,6 @@ class MainActivity : DaggerAppCompatActivity(), Router, EventDisplayer {
         subscribeToEvents()
     }
 
-    override fun onStart() {
-        super.onStart()
-        viewModel.start()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        viewModel.stop()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         viewModel.destroy()

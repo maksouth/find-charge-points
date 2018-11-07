@@ -4,12 +4,10 @@ import dagger.Module
 import dagger.Provides
 import name.mharbovskyi.findchargingstation.data.Communication
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
-import name.mharbovskyi.findchargingstation.device.ConnectionChecker
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
+import name.mharbovskyi.findchargingstation.domain.entity.Result
 import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
 import name.mharbovskyi.findchargingstation.domain.usecase.GetChargePointsUsecase
-import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
-import name.mharbovskyi.findchargingstation.domain.entity.Result
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.GreetingViewModel
@@ -39,9 +37,6 @@ class ViewModelModule {
         ChargePointViewModel(getChargePointsUsecase, router)
 
     @Provides
-    fun provideMainViewModel(
-        connectionChecker: ConnectionChecker,
-        router: Router
-    ): MainViewModel =
-        MainViewModel(connectionChecker, router)
+    fun provideMainViewModel(router: Router): MainViewModel =
+        MainViewModel(router)
 }

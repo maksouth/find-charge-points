@@ -7,18 +7,19 @@ import name.mharbovskyi.findchargingstation.data.repository.LocalChargePointsRep
 import name.mharbovskyi.findchargingstation.data.repository.OAuthRepository
 import name.mharbovskyi.findchargingstation.data.repository.RemoteUserRepository
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
-import name.mharbovskyi.findchargingstation.data.token.TokenProvider
+import name.mharbovskyi.findchargingstation.data.token.RequireTokenHandler
 import name.mharbovskyi.findchargingstation.domain.AuthRepository
 import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
 import name.mharbovskyi.findchargingstation.domain.UserRepository
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
+import java.io.Reader
 
 @Module
 class RepositoryModule {
 
     @Provides
-    fun provideChargePointsRepository(): ChargePointRepository =
-            LocalChargePointsRepository()
+    fun provideChargePointsRepository(chargePointsReader: Reader): ChargePointRepository =
+            LocalChargePointsRepository(chargePointsReader)
 
     @Provides
     fun provideOAuthRepository(
@@ -29,9 +30,9 @@ class RepositoryModule {
     @Provides
     fun provideRemoteUserRepository(
         newMotionApi: NewMotionApi,
-        tokenProvider: TokenProvider
+        requireTokenHandler: RequireTokenHandler<AuthTokens>
     ): UserRepository =
-            RemoteUserRepository(newMotionApi, tokenProvider)
+            RemoteUserRepository(newMotionApi, requireTokenHandler)
 }
 
 const val PROVIDER_COMPOSITE = "composite_provider"
