@@ -1,7 +1,7 @@
 package name.mharbovskyi.findchargingstation.data.repository
 
 import name.mharbovskyi.findchargingstation.data.NewMotionApi
-import name.mharbovskyi.findchargingstation.data.etc.toUserResult
+import name.mharbovskyi.findchargingstation.data.toUserResult
 import name.mharbovskyi.findchargingstation.data.token.TokenProvider
 import name.mharbovskyi.findchargingstation.domain.UserRepository
 import name.mharbovskyi.findchargingstation.domain.entity.User

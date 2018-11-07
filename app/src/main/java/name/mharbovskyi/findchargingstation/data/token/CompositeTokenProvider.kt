@@ -1,5 +1,6 @@
 package name.mharbovskyi.findchargingstation.data.token
 
+import name.mharbovskyi.findchargingstation.data.AccessTokenExpired
 import name.mharbovskyi.findchargingstation.domain.entity.*
 import java.time.Instant
 
@@ -24,5 +25,5 @@ fun AuthTokens.isExpired(): Boolean =
 
 internal fun AuthTokens.isValid() =
     if(isExpired())
-        Failure(AccessTokenExpired)
+        Failure(AccessTokenExpired())
     else Success(this)

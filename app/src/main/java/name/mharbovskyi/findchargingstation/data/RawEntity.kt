@@ -19,3 +19,16 @@ data class UserResponse(
     val status: String,
     val _links: Any
 )
+
+data class RawChargePoint(
+    val city: String,
+    val lng: Double,
+    val lat: Double,
+    val id: String,
+    val address: String,
+    val connectors: Any
+)
+
+data class RawChargePointsList(
+    val list: List<RawChargePoint>
+)

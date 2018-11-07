@@ -17,7 +17,6 @@ import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import javax.inject.Inject
 
-
 class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
 
     private val TAG = ChargePointsFragment::class.java.simpleName
@@ -38,7 +37,11 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment = fragmentManager!!.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = SupportMapFragment()
+        childFragmentManager.beginTransaction()
+            .replace(R.id.map_fragment, mapFragment)
+            .commit()
+
         mapFragment.getMapAsync(this)
 
         viewModel.load()

@@ -2,11 +2,14 @@ package name.mharbovskyi.findchargingstation.presentation.di.module
 
 import dagger.Module
 import dagger.Provides
+import name.mharbovskyi.findchargingstation.data.Communication
+import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.device.ConnectionChecker
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
 import name.mharbovskyi.findchargingstation.domain.usecase.GetChargePointsUsecase
 import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
+import name.mharbovskyi.findchargingstation.domain.entity.Result
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.GreetingViewModel
@@ -18,11 +21,11 @@ class ViewModelModule {
 
     @Provides
     fun provideLoginViewModel(
-        authenticateUsecase: AuthenticateUsecase<UsernamePassword>,
-        getUserUsecase: GetUserUsecase,
+        authenticateUsecase: AuthenticateUsecase<UsernamePassword, AuthTokens>,
+        communication: Communication<Result<AuthTokens>>,
         router: Router
     ): LoginViewModel =
-        LoginViewModel(authenticateUsecase, getUserUsecase, router)
+        LoginViewModel(authenticateUsecase, communication, router)
 
     @Provides
     fun provideGreetingViewModel(router: Router): GreetingViewModel =
@@ -38,8 +41,7 @@ class ViewModelModule {
     @Provides
     fun provideMainViewModel(
         connectionChecker: ConnectionChecker,
-        getUserUsecase: GetUserUsecase,
         router: Router
     ): MainViewModel =
-        MainViewModel(getUserUsecase, connectionChecker, router)
+        MainViewModel(connectionChecker, router)
 }

@@ -1,11 +1,18 @@
 package name.mharbovskyi.findchargingstation.data.token
 
 import name.mharbovskyi.findchargingstation.data.NewMotionApi
-import name.mharbovskyi.findchargingstation.data.etc.toAuthTokensResult
+import name.mharbovskyi.findchargingstation.data.toAuthTokensResult
 import name.mharbovskyi.findchargingstation.domain.entity.Result
+import name.mharbovskyi.findchargingstation.domain.entity.flatMap
+import name.mharbovskyi.findchargingstation.domain.entity.map
 
-class RefreshedTokenProvider(private val api: NewMotionApi): TokenProvider {
+class RefreshedTokenProvider(
+    private val api: NewMotionApi,
+    private val localTokenProvider: TokenProvider
+): TokenProvider {
     override suspend fun get(): Result<AuthTokens> {
-        return api.refreshAccessToken().await().toAuthTokensResult()
+        return localTokenProvider.get()
+            .map { api.refreshAccessToken(it.refreshToken).await()}
+            .flatMap { it.toAuthTokensResult() }
     }
 }

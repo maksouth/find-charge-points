@@ -4,6 +4,8 @@ import android.util.Log
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.delay
+import name.mharbovskyi.findchargingstation.data.Communication
+import name.mharbovskyi.findchargingstation.data.GetTokenException
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.AuthRepository
 import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
@@ -22,14 +24,15 @@ class StubRepositoryModule {
     @Provides fun provideAuthRepository(): AuthRepository<UsernamePassword, AuthTokens> = StubAuthRepository()
     @Provides fun provideChargePointsRepository(): ChargePointRepository = StubChargePointsRepository()
     @Provides fun provideUserRepository(): UserRepository = StubUserRepository()
+    @Provides fun provideCommunication(): Communication<Result<AuthTokens>> = StubCommunication()
 }
 
 const val TAG = "STUB_TAG"
 
 private fun log(msg: String) = Log.d(TAG, msg)
 
-private fun <T> randomErrorOr(block: () -> T): Result<T> =
-    if(Random.nextDouble() > 0.5) {
+private fun <T> randomErrorOr(coef: Double = 0.5, block: () -> T): Result<T> =
+    if(Random.nextDouble() > coef) {
         Success(block())
     } else Failure(Exception())
 
@@ -63,6 +66,18 @@ class StubUserRepository: UserRepository {
         delay(5000)
         log("return user")
         return randomErrorOr { User("1", "Maksym", "Harbovskyi") }
+    }
+
+}
+
+class StubCommunication: Communication<Result<AuthTokens>> {
+    override fun send(data: Result<AuthTokens>) {
+        Log.d(TAG, "Send tokens $data")
+    }
+
+    override suspend fun receive(): Result<AuthTokens> {
+        Log.d(TAG, "Receive tokens")
+        return Failure(GetTokenException())
     }
 
 }
