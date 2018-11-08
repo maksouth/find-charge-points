@@ -23,7 +23,7 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
     @Inject
     lateinit var viewModel: ChargePointViewModel
 
-    lateinit var googleMap: GoogleMap
+    lateinit var mapFragment: SupportMapFragment
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +36,7 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mapFragment = SupportMapFragment()
+        mapFragment = SupportMapFragment()
         childFragmentManager.beginTransaction()
             .replace(R.id.map_fragment, mapFragment)
             .commit()
@@ -52,19 +52,20 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
         viewModel.destroy()
     }
 
-    override fun onMapReady(map: GoogleMap) {
-        googleMap = map
 
-        viewModel.points.observe(this, Observer {
+
+    override fun onMapReady(map: GoogleMap) {
+
+        viewModel.points.observe(mapFragment, Observer {
             Log.d(TAG, "New points received $it")
             val bounds = LatLngBounds.Builder()
 
             it?.forEach { marker ->
-                googleMap.addMarker(marker)
+                map.addMarker(marker)
                 bounds.include(marker.position)
             }
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
+            map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
         })
     }
 

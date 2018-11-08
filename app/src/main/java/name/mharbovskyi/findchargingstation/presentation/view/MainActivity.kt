@@ -9,13 +9,12 @@ import android.view.View
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import name.mharbovskyi.findchargingstation.R
-import name.mharbovskyi.findchargingstation.presentation.EventDisplayer
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.ViewUser
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.MainViewModel
 import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity(), Router, EventDisplayer {
+class MainActivity : DaggerAppCompatActivity(), Router {
     private val TAG = MainActivity::class.java.simpleName
 
     private val chargePointsTransaction = "stations"
@@ -45,15 +44,9 @@ class MainActivity : DaggerAppCompatActivity(), Router, EventDisplayer {
 
     override fun showChargePoints() {
         val stationsFragment = supportFragmentManager.findFragmentByTag(ChargePointsFragment::class.java.simpleName)
-
-        if (stationsFragment != null) {
-            supportFragmentManager.popBackStack(chargePointsTransaction, 0)
-        } else {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, ChargePointsFragment(), ChargePointsFragment::class.java.simpleName)
-                .addToBackStack(chargePointsTransaction)
-                .commit()
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, ChargePointsFragment(), ChargePointsFragment::class.java.simpleName)
+            .commit()
     }
 
     override fun hideAuthentication() {
@@ -66,22 +59,22 @@ class MainActivity : DaggerAppCompatActivity(), Router, EventDisplayer {
             .commit()
     }
 
-    override fun showError(resId: Int) {
+    fun showError(resId: Int) {
         Log.d(TAG, "Error ${getString(resId)}")
         Snackbar.make(fragment_container, resId, Snackbar.LENGTH_LONG).show()
     }
 
-    override fun showLoading() {
+    fun showLoading() {
         Log.d(TAG, "Show loading")
         progress.visibility = View.VISIBLE
     }
 
-    override fun hideLoading() {
+    fun hideLoading() {
         Log.d(TAG, "Hide loading")
         progress.visibility = View.GONE
     }
 
-    override fun showInfo(resId: Int) {
+    fun showInfo(resId: Int) {
         Log.d(TAG, "Info ${getString(resId)}")
         Snackbar.make(fragment_container, resId, Snackbar.LENGTH_SHORT).show()
     }

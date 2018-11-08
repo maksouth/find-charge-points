@@ -5,14 +5,12 @@ import dagger.Provides
 import name.mharbovskyi.findchargingstation.data.NewMotionApi
 import name.mharbovskyi.findchargingstation.data.repository.LocalChargePointsRepository
 import name.mharbovskyi.findchargingstation.data.repository.OAuthRepository
+import name.mharbovskyi.findchargingstation.data.repository.RemoteUserRepository
 import name.mharbovskyi.findchargingstation.data.repository.RequireOAuthRepository
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.data.token.RequireTokenHandler
 import name.mharbovskyi.findchargingstation.data.token.TokenConsumer
-import name.mharbovskyi.findchargingstation.domain.AuthRepository
-import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
-import name.mharbovskyi.findchargingstation.domain.RequireAuthenticationRepository
-import name.mharbovskyi.findchargingstation.domain.UsernamePassword
+import name.mharbovskyi.findchargingstation.domain.*
 import name.mharbovskyi.findchargingstation.presentation.di.module.ASSET_CHARGE_POINTS
 import java.io.Reader
 import javax.inject.Named
@@ -42,6 +40,14 @@ class RepositoryModule {
         requireTokenHandler: RequireTokenHandler<AuthTokens>
     ): RequireAuthenticationRepository =
         RequireOAuthRepository(requireTokenHandler, tokenConsumer)
+
+    @Provides
+    fun provideUserRepository(
+        api: NewMotionApi,
+        requireTokenHandler: RequireTokenHandler<AuthTokens>
+    ): UserRepository =
+        RemoteUserRepository(api, requireTokenHandler)
+
 
 //
 //    @Provides

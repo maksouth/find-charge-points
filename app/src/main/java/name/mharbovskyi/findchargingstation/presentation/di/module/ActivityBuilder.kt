@@ -1,12 +1,15 @@
 package name.mharbovskyi.findchargingstation.presentation.di.module
 
+import android.content.Context
 import dagger.Module
 import dagger.Provides
 import dagger.android.ContributesAndroidInjector
+import name.mharbovskyi.findchargingstation.data.Communication
 import name.mharbovskyi.findchargingstation.data.di.RepositoryModule
 import name.mharbovskyi.findchargingstation.data.di.StubRepositoryModule
+import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.di.UsecaseModule
-import name.mharbovskyi.findchargingstation.presentation.EventDisplayer
+import name.mharbovskyi.findchargingstation.presentation.BroadcastCredentialsCommunication
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.view.MainActivity
 
@@ -29,8 +32,4 @@ class ActivityModule {
     @Provides
     fun provideRouter(mainActivity: MainActivity): Router =
         mainActivity
-
-    @Provides
-    fun provideEventDisplayer(mainActivity: MainActivity): EventDisplayer =
-            mainActivity
 }
