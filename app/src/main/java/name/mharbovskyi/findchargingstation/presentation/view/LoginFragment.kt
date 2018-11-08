@@ -1,20 +1,20 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoginViewModel
 import javax.inject.Inject
 
-class LoginFragment : DaggerFragment() {
+class LoginFragment : BaseFragment() {
 
     private val TAG = LoginFragment::class.java.simpleName
+
+    override val progressBar: View by lazy { progress }
+    override val rootLayout: ViewGroup by lazy { login_fragment }
 
     @Inject
     lateinit var viewModel: LoginViewModel
@@ -33,17 +33,7 @@ class LoginFragment : DaggerFragment() {
             viewModel.authenticate(username_field.text.toString(), password_field.text.toString())
         }
 
-        subscribeToEvents()
-    }
-
-    private fun subscribeToEvents() {
-        viewModel.errors.observe(this, Observer{ resId ->
-            if (resId != null) Log.d(TAG, getString(resId))
-        })
-
-        viewModel.loading.observe(this, Observer {
-            Log.d(TAG, "Load state $it")
-        })
+        subscribe(viewModel)
     }
 
     override fun onDestroy() {

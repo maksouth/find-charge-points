@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.ViewUser
+import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoadingState
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.MainViewModel
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class MainActivity : DaggerAppCompatActivity(), Router {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         viewModel.load()
-        subscribeToEvents()
+        subscribe()
     }
 
     override fun onDestroy() {
@@ -79,13 +80,21 @@ class MainActivity : DaggerAppCompatActivity(), Router {
         Snackbar.make(fragment_container, resId, Snackbar.LENGTH_SHORT).show()
     }
 
-    fun subscribeToEvents() {
+    fun subscribe() {
         viewModel.errors.observe(this, Observer{ resId ->
-            if (resId != null) Log.d(TAG, getString(resId))
+            resId?.let { showError(resId) }
         })
 
-        viewModel.loading.observe(this, Observer {
-            Log.d(TAG, "Load state $it")
+        viewModel.loading.observe(this, Observer {it?.let {
+            when(it) {
+                LoadingState.SHOW -> showLoading()
+                LoadingState.HIDE -> hideLoading()
+            }
+        }
+        })
+
+        viewModel.info.observe(this, Observer {
+            it?.let { showInfo(it) }
         })
     }
 }

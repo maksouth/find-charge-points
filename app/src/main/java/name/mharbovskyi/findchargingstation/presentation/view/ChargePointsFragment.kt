@@ -11,14 +11,17 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLngBounds
-import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_charge_stations.*
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import javax.inject.Inject
 
-class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
+class ChargePointsFragment : BaseFragment(), OnMapReadyCallback {
 
     private val TAG = ChargePointsFragment::class.java.simpleName
+
+    override val progressBar: View by lazy { progress }
+    override val rootLayout: ViewGroup by lazy { map_fragment }
 
     @Inject
     lateinit var viewModel: ChargePointViewModel
@@ -44,15 +47,13 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         viewModel.load()
-        subscribeToEvents()
+        subscribe(viewModel)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         viewModel.destroy()
     }
-
-
 
     override fun onMapReady(map: GoogleMap) {
 
@@ -66,16 +67,6 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
             }
 
             map.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
-        })
-    }
-
-    fun subscribeToEvents() {
-        viewModel.errors.observe(this, Observer{ resId ->
-            if (resId != null) Log.d(TAG, getString(resId))
-        })
-
-        viewModel.loading.observe(this, Observer {
-            Log.d(TAG, "Load state $it")
         })
     }
 }

@@ -11,12 +11,4 @@ class MainViewModel(
     fun load() = launch {
         router?.showChargePoints()
     }
-
-    private fun infoConnected() {
-        showInfo(R.string.info_connected)
-    }
-
-    private fun infoDisconnected() {
-        showInfo(R.string.info_disconnected)
-    }
 }
