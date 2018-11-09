@@ -2,10 +2,9 @@ package name.mharbovskyi.findchargingstation.presentation.di.module
 
 import dagger.Module
 import dagger.Provides
-import name.mharbovskyi.findchargingstation.data.Communication
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
+import name.mharbovskyi.findchargingstation.domain.UserRepository
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
-import name.mharbovskyi.findchargingstation.domain.entity.Result
 import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
 import name.mharbovskyi.findchargingstation.domain.usecase.GetChargePointsUsecase
 import name.mharbovskyi.findchargingstation.presentation.Router
@@ -20,14 +19,16 @@ class ViewModelModule {
     @Provides
     fun provideLoginViewModel(
         authenticateUsecase: AuthenticateUsecase<UsernamePassword, AuthTokens>,
-        communication: Communication<Result<AuthTokens>>,
         router: Router
     ): LoginViewModel =
-        LoginViewModel(authenticateUsecase, communication, router)
+        LoginViewModel(authenticateUsecase, router)
 
     @Provides
-    fun provideGreetingViewModel(router: Router): GreetingViewModel =
-        GreetingViewModel(router)
+    fun provideGreetingViewModel(
+        userRepository: UserRepository,
+        router: Router
+    ): GreetingViewModel =
+        GreetingViewModel(userRepository, router)
 
     @Provides
     fun provideChargePointsViewModel(

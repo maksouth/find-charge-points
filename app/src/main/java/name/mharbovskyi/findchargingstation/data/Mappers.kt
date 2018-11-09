@@ -1,5 +1,6 @@
 package name.mharbovskyi.findchargingstation.data
 
+import name.mharbovskyi.findchargingstation.common.*
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.entity.*
 import retrofit2.Response
@@ -31,8 +32,9 @@ internal fun Response<UserResponse>.toUserResult(): Result<User> =
         )
     } ?: Failure(GetUserException())
 
-private fun <T, R> baseParseResponse(response: Response<T>, block: T.() -> R): Success<R>? =
-    response.body()
+private fun <T, R> baseParseResponse(response: Response<T>, block: T.() -> R): Result<R>? =
+    if(response.code() == 401) Failure(BadTokenException())
+    else response.body()
         ?.let(block)
         ?.let { Success(it) }
 

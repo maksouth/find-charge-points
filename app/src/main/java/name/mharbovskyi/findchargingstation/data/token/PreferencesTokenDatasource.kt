@@ -1,14 +1,17 @@
 package name.mharbovskyi.findchargingstation.data.token
 
 import android.content.SharedPreferences
-import name.mharbovskyi.findchargingstation.data.NoTokensException
-import name.mharbovskyi.findchargingstation.domain.entity.Failure
-import name.mharbovskyi.findchargingstation.domain.entity.Result
-import name.mharbovskyi.findchargingstation.domain.entity.Success
+import android.util.Log
+import name.mharbovskyi.findchargingstation.common.NoTokensException
+import name.mharbovskyi.findchargingstation.common.Failure
+import name.mharbovskyi.findchargingstation.common.Result
+import name.mharbovskyi.findchargingstation.common.Success
 
 class PreferencesTokenDatasource (
     private val sharedPreferences: SharedPreferences
 ): TokenProvider<AuthTokens>, TokenConsumer<AuthTokens> {
+
+    val TAG = PreferencesTokenDatasource::class.java.simpleName
 
     override suspend fun get(): Result<AuthTokens> {
         val accessToken = sharedPreferences.getString(
@@ -24,11 +27,19 @@ class PreferencesTokenDatasource (
             DEF_LONG
         )
 
-        if (accessToken == DEF_STRING || refreshToken == DEF_STRING || expirationSec == DEF_LONG)
+        if (accessToken == DEF_STRING || refreshToken == DEF_STRING || expirationSec == DEF_LONG) {
+            Log.d(TAG, "Read tokens failure: no tokens saved")
             return Failure(NoTokensException())
-        else return Success(
-            AuthTokens(accessToken, refreshToken, expirationSec)
-        )
+        } else {
+            Log.d(TAG, "Read tokens success")
+            return Success(
+                AuthTokens(
+                    accessToken,
+                    refreshToken,
+                    expirationSec
+                )
+            )
+        }
     }
 
     override suspend fun consume(tokens: AuthTokens) {

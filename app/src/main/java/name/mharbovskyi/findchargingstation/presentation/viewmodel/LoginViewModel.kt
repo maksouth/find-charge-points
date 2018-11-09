@@ -2,17 +2,13 @@ package name.mharbovskyi.findchargingstation.presentation.viewmodel
 
 import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.R
-import name.mharbovskyi.findchargingstation.data.Communication
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
-import name.mharbovskyi.findchargingstation.domain.entity.Result
-import name.mharbovskyi.findchargingstation.domain.entity.Success
 import name.mharbovskyi.findchargingstation.presentation.Router
 
 class LoginViewModel(
     private val authenticateUsecase: AuthenticateUsecase<UsernamePassword, AuthTokens>,
-    private val communication: Communication<Result<AuthTokens>>,
     router: Router
 ) : BaseViewModel(router) {
 
@@ -23,10 +19,7 @@ class LoginViewModel(
 
             showLoading()
             val result = authenticateUsecase.authenticate(credentials)
-            result.showErrorOr {
-                communication.send(Success(it))
-                router?.hideAuthentication()
-            }
+            result.showErrorOr { router?.hideAuthentication() }
         }
     }
 

@@ -32,10 +32,10 @@ class GreetingFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            first_name.text = it.getString(FIRST_NAME)
-            last_name.text = it.getString(LAST_NAME)
-        }
+//        arguments?.let {
+//            first_name.text = it.getString(FIRST_NAME)
+//            last_name.text = it.getString(LAST_NAME)
+//        }
         viewModel.load()
         subscribe(viewModel)
     }
@@ -47,12 +47,12 @@ class GreetingFragment : BaseFragment() {
 
 
     companion object {
-        fun newInstance(user: ViewUser): GreetingFragment {
+        fun newInstance(): GreetingFragment {
             return GreetingFragment().apply {
-                arguments = Bundle().apply {
-                    putString(FIRST_NAME, user.firstName)
-                    putString(LAST_NAME, user.lastName)
-                }
+//                arguments = Bundle().apply {
+//                    putString(FIRST_NAME, user.firstName)
+//                    putString(LAST_NAME, user.lastName)
+//                }
             }
         }
     }

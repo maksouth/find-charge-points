@@ -1,4 +1,4 @@
-package name.mharbovskyi.findchargingstation.domain.entity
+package name.mharbovskyi.findchargingstation.common
 
 sealed class Result<out T>
 data class Success<out T>(val data: T) : Result<T>()
@@ -27,6 +27,13 @@ inline fun <T> Result<T>.recover(block: () -> Result<T>): Result<T> =
 inline fun <T> Result<T>.onSuccess(block: (T) -> Unit): Result<T> {
     if (this is Success) {
         block(data)
+    }
+    return this
+}
+
+inline fun <T> Result<T>.onFailure(block: (Throwable?) -> Unit): Result<T> {
+    if (this is Failure) {
+        block(error)
     }
     return this
 }

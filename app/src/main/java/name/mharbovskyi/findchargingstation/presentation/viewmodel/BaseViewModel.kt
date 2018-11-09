@@ -7,9 +7,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
-import name.mharbovskyi.findchargingstation.domain.entity.Failure
-import name.mharbovskyi.findchargingstation.domain.entity.Result
-import name.mharbovskyi.findchargingstation.domain.entity.Success
+import name.mharbovskyi.findchargingstation.common.*
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.mapErrorToCode
 import kotlin.coroutines.CoroutineContext
@@ -20,8 +18,9 @@ open class BaseViewModel(
     protected var router: Router?
 ): CoroutineScope {
 
+    private val job = Job()
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.IO + Job()
+        get() = Dispatchers.IO + job
 
     private val _errors by lazy { MutableLiveData<Int>() }
     val errors: LiveData<Int>
@@ -54,6 +53,6 @@ open class BaseViewModel(
 
     open fun destroy() {
         router = null
-        coroutineContext.cancel()
+        job.cancel()
     }
 }

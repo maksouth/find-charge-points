@@ -1,18 +1,23 @@
 package name.mharbovskyi.findchargingstation.data.token
 
-import name.mharbovskyi.findchargingstation.data.NewMotionApi
+import android.util.Log
+import name.mharbovskyi.findchargingstation.data.repository.NewMotionApi
 import name.mharbovskyi.findchargingstation.data.toAuthTokensResult
-import name.mharbovskyi.findchargingstation.domain.entity.Result
-import name.mharbovskyi.findchargingstation.domain.entity.flatMap
-import name.mharbovskyi.findchargingstation.domain.entity.map
+import name.mharbovskyi.findchargingstation.common.*
 
 class RefreshedTokenProvider(
     private val api: NewMotionApi,
-    private val localTokenProvider: TokenProvider<AuthTokens>
+    private val localTokenDatasource: PreferencesTokenDatasource
 ): TokenProvider<AuthTokens> {
+
+    val TAG = RefreshedTokenProvider::class.java.simpleName
+
     override suspend fun get(): Result<AuthTokens> {
-        return localTokenProvider.get()
-            .map { api.refreshAccessToken(it.refreshToken).await()}
+        return localTokenDatasource.get()
+            .flatMap { api.refreshAccessToken(it.refreshToken).awaitResult()}
             .flatMap { it.toAuthTokensResult() }
+            .onSuccess { localTokenDatasource.consume(it) }
+            .onSuccess { Log.d(TAG, "Refresh token success") }
+            .onFailure { Log.d(TAG, "Refresh token failure $it") }
     }
 }

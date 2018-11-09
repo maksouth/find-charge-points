@@ -1,9 +1,9 @@
 package name.mharbovskyi.findchargingstation.data.token
 
-import name.mharbovskyi.findchargingstation.data.NoTokensException
-import name.mharbovskyi.findchargingstation.domain.entity.Failure
-import name.mharbovskyi.findchargingstation.domain.entity.Result
-import name.mharbovskyi.findchargingstation.domain.entity.flatMap
+import name.mharbovskyi.findchargingstation.common.NoTokensException
+import name.mharbovskyi.findchargingstation.common.Failure
+import name.mharbovskyi.findchargingstation.common.Result
+import name.mharbovskyi.findchargingstation.common.flatMap
 
 class RequireTokenHandler<T>(
     private val providers: List<TokenProvider<T>>,
@@ -11,9 +11,10 @@ class RequireTokenHandler<T>(
     private val shouldRetry: (Result<*>) -> Boolean
 ) {
 
-    suspend fun <R> requireToken(consumer: suspend (T) -> Result<R>): Result<R> {
+    suspend fun <R> withToken(consumer: suspend (T) -> Result<R>): Result<R> {
 
-        var result: Result<R> = Failure(NoTokensException())
+        var result: Result<R> =
+            Failure(NoTokensException())
         for (provider in providers) {
             result = provider.get()
                 .flatMap { isValid(it) }

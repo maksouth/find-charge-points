@@ -1,6 +1,8 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
 import android.arch.lifecycle.Observer
+import android.content.Context
+import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.util.Log
 import android.view.View
@@ -9,7 +11,11 @@ import dagger.android.support.DaggerFragment
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.BaseViewModel
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoadingState
 
+var _counter = 0
+
 abstract class BaseFragment: DaggerFragment() {
+
+    val counter = _counter++
 
     private val TAG = BaseFragment::class.java.simpleName
 
@@ -38,6 +44,51 @@ abstract class BaseFragment: DaggerFragment() {
                 Snackbar.make(rootLayout, it, Snackbar.LENGTH_LONG).show()
             }
         })
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d(this::class.java.simpleName, "at ${object{}.javaClass.enclosingMethod.name}")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d(this::class.java.simpleName, "at ${object{}.javaClass.enclosingMethod.name}")
     }
 
 }

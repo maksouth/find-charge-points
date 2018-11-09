@@ -1,7 +1,8 @@
-package name.mharbovskyi.findchargingstation.data
+package name.mharbovskyi.findchargingstation.data.repository
 
 import kotlinx.coroutines.Deferred
-import name.mharbovskyi.findchargingstation.data.token.AuthTokens
+import name.mharbovskyi.findchargingstation.data.TokensResponse
+import name.mharbovskyi.findchargingstation.data.UserResponse
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -35,8 +36,7 @@ interface NewMotionApi {
         @Field(FIELD_GRANT_TYPE) grantType: String = GRANT_TYPE_REFRESH_TOKEN
     ): Deferred<Response<TokensResponse>>
 
-    @FormUrlEncoded
-    @POST(ENDPOINT_PROFILE)
+    @GET(ENDPOINT_PROFILE)
     fun getUser(
         @Header("Authorization") authorization: String
     ): Deferred<Response<UserResponse>>

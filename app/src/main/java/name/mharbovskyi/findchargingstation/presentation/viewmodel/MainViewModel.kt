@@ -9,6 +9,6 @@ class MainViewModel(
 ) : BaseViewModel(router) {
 
     fun load() = launch {
-        router?.showChargePoints()
+        router?.showGreeting()
     }
 }

@@ -21,20 +21,13 @@ class ChargePointViewModel(
         get() = _points
 
     fun load() {
+        showLoading()
+    }
+
+    fun loadChargePoints() {
         launch {
-            showLoading()
             val result = getChargePointsUsecase.getAll()
-            hideLoading()
-
             result.showErrorOr { showChargePoints(it) }
-
-//            coroutineScope {
-//                var counter = 0
-//                while (true) {
-//                    Log.d(TAG, "HIIIIIIIIII ${counter++}")
-//                    delay(2000)
-//                }
-//            }
         }
     }
 

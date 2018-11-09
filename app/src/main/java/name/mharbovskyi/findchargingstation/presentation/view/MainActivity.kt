@@ -15,19 +15,19 @@ class MainActivity : DaggerAppCompatActivity(), Router {
     private val chargePointsTransaction = "stations"
     private val authenticationTransaction = "authentication"
 
-    @Inject
-    lateinit var viewModel: MainViewModel
+//    @Inject
+//    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        viewModel.load()
+        showGreeting()
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.destroy()
-    }
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        viewModel.destroy()
+//    }
 
     override fun showAuthentication() {
         supportFragmentManager.beginTransaction()
@@ -47,9 +47,9 @@ class MainActivity : DaggerAppCompatActivity(), Router {
         supportFragmentManager.popBackStack(authenticationTransaction, POP_BACK_STACK_INCLUSIVE)
     }
 
-    override fun showGreeting(user: ViewUser) {
+    override fun showGreeting() {
         supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, GreetingFragment.newInstance(user))
+            .replace(R.id.fragment_container, GreetingFragment.newInstance())
             .commit()
     }
 }

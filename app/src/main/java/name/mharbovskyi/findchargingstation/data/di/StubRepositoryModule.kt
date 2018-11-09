@@ -2,13 +2,17 @@ package name.mharbovskyi.findchargingstation.data.di
 
 import android.util.Log
 import dagger.Module
-import dagger.Provides
 import kotlinx.coroutines.delay
-import name.mharbovskyi.findchargingstation.data.Communication
-import name.mharbovskyi.findchargingstation.data.GetTokenException
+import name.mharbovskyi.findchargingstation.common.Failure
+import name.mharbovskyi.findchargingstation.common.Result
+import name.mharbovskyi.findchargingstation.common.Success
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
-import name.mharbovskyi.findchargingstation.domain.*
-import name.mharbovskyi.findchargingstation.domain.entity.*
+import name.mharbovskyi.findchargingstation.domain.AuthRepository
+import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
+import name.mharbovskyi.findchargingstation.domain.UserRepository
+import name.mharbovskyi.findchargingstation.domain.UsernamePassword
+import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
+import name.mharbovskyi.findchargingstation.domain.entity.User
 import kotlin.random.Random
 
 @Module
@@ -17,7 +21,7 @@ class StubRepositoryModule {
     //@Provides fun provideChargePointsRepository(): ChargePointRepository = StubChargePointsRepository()
     //@Provides fun provideUserRepository(): UserRepository = StubUserRepository()
     //@Provides fun provideCommunication(): Communication<Result<AuthTokens>> = StubCommunication()
-    //@Provides fun provideRequireAuthRepository(): RequireAuthenticationRepository = StubRequireAuthRepository()
+    //@Provides fun provideRequireAuthRepository(): TryAuthenticationRepository = StubTryAuthRepository()
 }
 
 const val TAG = "STUB_TAG"
@@ -28,11 +32,6 @@ private fun <T> randomErrorOr(coef: Double = 0.5, block: () -> T): Result<T> =
     if(Random.nextDouble() > coef) {
         Success(block())
     } else Failure(Exception())
-
-class StubRequireAuthRepository: RequireAuthenticationRepository {
-    override suspend fun requireAuthentication(): Result<Unit> =
-        Success(Unit)
-}
 
 class StubAuthRepository: AuthRepository<UsernamePassword, AuthTokens> {
     override suspend fun authenticate(credentials: UsernamePassword): Result<AuthTokens> {
@@ -64,18 +63,6 @@ class StubUserRepository: UserRepository {
         delay(5000)
         log("return user")
         return randomErrorOr { User("1", "Maksym", "Harbovskyi") }
-    }
-
-}
-
-class StubCommunication: Communication<Result<AuthTokens>> {
-    override fun send(data: Result<AuthTokens>) {
-        Log.d(TAG, "Send tokens $data")
-    }
-
-    override suspend fun receive(): Result<AuthTokens> {
-        Log.d(TAG, "Receive tokens")
-        return Failure(GetTokenException())
     }
 
 }

@@ -2,14 +2,12 @@ package name.mharbovskyi.findchargingstation.data.repository
 
 import android.util.Log
 import com.google.gson.Gson
-import name.mharbovskyi.findchargingstation.data.GetChargePointsException
+import name.mharbovskyi.findchargingstation.common.GetChargePointsException
 import name.mharbovskyi.findchargingstation.data.RawChargePoint
 import name.mharbovskyi.findchargingstation.data.toChargePoint
 import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
-import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
-import name.mharbovskyi.findchargingstation.domain.entity.Failure
-import name.mharbovskyi.findchargingstation.domain.entity.Result
-import name.mharbovskyi.findchargingstation.domain.entity.Success
+import name.mharbovskyi.findchargingstation.domain.entity.*
+import name.mharbovskyi.findchargingstation.common.*
 import java.io.Reader
 
 class LocalChargePointsRepository(
@@ -32,7 +30,8 @@ class LocalChargePointsRepository(
 
             } ?: Failure(GetChargePointsException())
         } catch (e: Exception) {
-            Log.d(TAG, "When reading charge points", e)
-            Failure(GetChargePointsException())
+            Failure(e)
         }
+            .onSuccess { Log.d(TAG, "Read charge points success") }
+            .onFailure { Log.d(TAG, "Read charge points failure", it) }
 }
