@@ -1,7 +1,5 @@
-package name.mharbovskyi.findchargingstation.domain.usecase
+package name.mharbovskyi.findchargingstation.domain
 
-import name.mharbovskyi.findchargingstation.domain.AuthRepository
-import name.mharbovskyi.findchargingstation.domain.Credentials
 import name.mharbovskyi.findchargingstation.common.Result
 import name.mharbovskyi.findchargingstation.common.onSuccess
 import name.mharbovskyi.findchargingstation.data.token.TokenConsumer

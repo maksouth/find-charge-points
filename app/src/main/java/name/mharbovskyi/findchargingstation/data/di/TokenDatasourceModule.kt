@@ -3,7 +3,7 @@ package name.mharbovskyi.findchargingstation.data.di
 import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
-import name.mharbovskyi.findchargingstation.data.repository.NewMotionApi
+import name.mharbovskyi.findchargingstation.data.api.NewMotionApi
 import name.mharbovskyi.findchargingstation.data.token.*
 import javax.inject.Named
 

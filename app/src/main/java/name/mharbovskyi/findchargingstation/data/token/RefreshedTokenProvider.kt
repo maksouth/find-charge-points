@@ -1,7 +1,7 @@
 package name.mharbovskyi.findchargingstation.data.token
 
 import android.util.Log
-import name.mharbovskyi.findchargingstation.data.repository.NewMotionApi
+import name.mharbovskyi.findchargingstation.data.api.NewMotionApi
 import name.mharbovskyi.findchargingstation.data.toAuthTokensResult
 import name.mharbovskyi.findchargingstation.common.*
 

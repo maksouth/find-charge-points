@@ -6,8 +6,6 @@
     <string name="login">Login</string>
     <string name="login_failed">Login failed</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="error_other">Something bad happened</string>
     <string name="error_bad_format_username">Enter valid username</string>
     <string name="error_bad_format_password">Enter valid password</string>
@@ -15,4 +13,7 @@
     <string name="info_disconnected">You are offline</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="error_start_get_user">Cannot start normally, try later</string>
+    <string name="exit">Exit</string>
+    <string name="error_get_charge_points">Cannot get charge points</string>
 </resources>

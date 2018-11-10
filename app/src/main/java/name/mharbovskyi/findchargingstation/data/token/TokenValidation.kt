@@ -21,7 +21,7 @@ private fun AuthTokens.isValid() =
         Failure(AccessTokenExpired())
     else Success(this)
 
-public fun <T> Result<T>.isAuthFailure(): Boolean =
+fun <T> Result<T>.isAuthFailure(): Boolean =
     (this as? Failure)?.run {
         error is BadTokenException
                 || error is NoTokensException

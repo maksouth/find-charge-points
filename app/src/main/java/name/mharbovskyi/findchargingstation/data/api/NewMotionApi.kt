@@ -1,4 +1,4 @@
-package name.mharbovskyi.findchargingstation.data.repository
+package name.mharbovskyi.findchargingstation.data.api
 
 import kotlinx.coroutines.Deferred
 import name.mharbovskyi.findchargingstation.data.TokensResponse

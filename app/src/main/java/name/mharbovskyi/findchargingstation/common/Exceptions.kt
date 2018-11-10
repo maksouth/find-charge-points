@@ -3,11 +3,13 @@ package name.mharbovskyi.findchargingstation.common
 import java.lang.Exception
 import java.util.*
 
-class GetUserException: NoSuchElementException()
 class GetTokenException: NoSuchElementException()
 class RefreshTokenException: NoSuchElementException()
-class NoTokensException: NoSuchElementException()
-class AccessTokenExpired: IllegalStateException()
+open class BadTokenException: IllegalStateException()
+class NoTokensException: BadTokenException()
+class AccessTokenExpired: BadTokenException()
+
+class GetUserException: NoSuchElementException()
 class GetChargePointsException: IllegalStateException()
-class BadTokenException: IllegalStateException()
-class UserCancelledAuthenticationException: Exception()
+open class LoginException: Exception()
+class UserCancelledAuthenticationException: LoginException()

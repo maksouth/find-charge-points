@@ -4,28 +4,16 @@ import dagger.Module
 import dagger.Provides
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.data.token.TokenConsumer
-import name.mharbovskyi.findchargingstation.domain.*
-import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
-import name.mharbovskyi.findchargingstation.domain.usecase.GetChargePointsUsecase
-import name.mharbovskyi.findchargingstation.domain.usecase.GetUserUsecase
+import name.mharbovskyi.findchargingstation.domain.AuthRepository
+import name.mharbovskyi.findchargingstation.domain.AuthenticateUsecase
+import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 
 @Module
 class UsecaseModule {
-
     @Provides
-    fun provideOauthAuthenticateUsecase(
+    fun provideAuthenticateUsecase(
         authRepository: AuthRepository<UsernamePassword, AuthTokens>,
         tokenConsumer: TokenConsumer<AuthTokens>
     ): AuthenticateUsecase<UsernamePassword, AuthTokens> =
         AuthenticateUsecase(authRepository, tokenConsumer)
-
-    @Provides
-    fun provideGetChargePointsUsecase(
-        chargePointRepository: ChargePointRepository
-    ): GetChargePointsUsecase =
-        GetChargePointsUsecase(chargePointRepository)
-
-    @Provides
-    fun provideGetUserUsecase(userRepository: UserRepository): GetUserUsecase =
-        GetUserUsecase(userRepository)
 }

@@ -1,55 +1,57 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentManager.POP_BACK_STACK_INCLUSIVE
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_login.*
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.ViewUser
-import name.mharbovskyi.findchargingstation.presentation.viewmodel.MainViewModel
-import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity(), Router {
-    private val TAG = MainActivity::class.java.simpleName
-
-    private val chargePointsTransaction = "stations"
-    private val authenticationTransaction = "authentication"
-
-//    @Inject
-//    lateinit var viewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        showGreeting()
+
+        intent.apply {
+            if (getStringExtra(EXTRA_SCREEN) == SCREEN_GREETING) {
+                val firstName = getStringExtra(EXTRA_FIRST_NAME)
+                val lastName = getStringExtra(EXTRA_LAST_NAME)
+
+                showGreeting(ViewUser(firstName, lastName))
+            } else showChargePoints()
+        }
     }
 
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        viewModel.destroy()
-//    }
-
     override fun showAuthentication() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, LoginFragment())
-            .addToBackStack(authenticationTransaction)
-            .commit()
+        startActivityForResult(Intent(this, LoginActivity::class.java), LoginActivity.REQUEST_CODE)
     }
 
     override fun showChargePoints() {
-        val stationsFragment = supportFragmentManager.findFragmentByTag(ChargePointsFragment::class.java.simpleName)
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, ChargePointsFragment(), ChargePointsFragment::class.java.simpleName)
             .commit()
     }
 
-    override fun hideAuthentication() {
-        supportFragmentManager.popBackStack(authenticationTransaction, POP_BACK_STACK_INCLUSIVE)
+    override fun showGreeting(user: ViewUser) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, GreetingFragment.newInstance(user))
+            .commit()
     }
 
-    override fun showGreeting() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, GreetingFragment.newInstance())
-            .commit()
+    companion object {
+        private val EXTRA_FIRST_NAME = "first_name"
+        private val EXTRA_LAST_NAME = "last_name"
+        private val EXTRA_SCREEN = "screen"
+        private val SCREEN_GREETING = "screen_greeting"
+
+        fun createGreetingIntent(user: ViewUser, context: Context): Intent =
+                Intent(context, MainActivity::class.java).apply {
+                    putExtra(EXTRA_SCREEN, SCREEN_GREETING)
+                    putExtra(EXTRA_FIRST_NAME, user.firstName)
+                    putExtra(EXTRA_LAST_NAME, user.lastName)
+                }
     }
 }

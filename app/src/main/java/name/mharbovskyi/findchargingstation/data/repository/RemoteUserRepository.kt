@@ -7,6 +7,7 @@ import name.mharbovskyi.findchargingstation.data.token.RequireTokenHandler
 import name.mharbovskyi.findchargingstation.domain.UserRepository
 import name.mharbovskyi.findchargingstation.domain.entity.*
 import name.mharbovskyi.findchargingstation.common.*
+import name.mharbovskyi.findchargingstation.data.api.NewMotionApi
 
 class RemoteUserRepository (
     private val api: NewMotionApi,

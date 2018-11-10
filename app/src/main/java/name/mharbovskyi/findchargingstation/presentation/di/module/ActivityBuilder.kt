@@ -1,31 +1,33 @@
 package name.mharbovskyi.findchargingstation.presentation.di.module
 
 import dagger.Module
-import dagger.Provides
+import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
 import name.mharbovskyi.findchargingstation.data.di.RepositoryModule
 import name.mharbovskyi.findchargingstation.data.di.StubRepositoryModule
 import name.mharbovskyi.findchargingstation.domain.di.UsecaseModule
-import name.mharbovskyi.findchargingstation.presentation.Router
+import name.mharbovskyi.findchargingstation.presentation.view.LoginActivity
 import name.mharbovskyi.findchargingstation.presentation.view.MainActivity
+import name.mharbovskyi.findchargingstation.presentation.view.SplashActivity
 
-@Module
+@Module(includes = [
+    StubRepositoryModule::class,
+    RepositoryModule::class,
+    UsecaseModule::class,
+    ViewModelModule::class
+])
 abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [
         FragmentsProvider::class,
-        ViewModelModule::class,
-        StubRepositoryModule::class,
-        RepositoryModule::class,
-        UsecaseModule::class,
-        ActivityModule::class
+        MainActivityModule::class
     ])
     abstract fun bindMainActivity(): MainActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindLoginActivity(): LoginActivity
+
+    @ContributesAndroidInjector
+    abstract fun bindSplashActivity(): SplashActivity
 }
 
-@Module
-class ActivityModule {
-    @Provides
-    fun provideRouter(mainActivity: MainActivity): Router =
-        mainActivity
-}

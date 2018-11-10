@@ -3,6 +3,7 @@ package name.mharbovskyi.findchargingstation.presentation.di.component
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
+import dagger.android.support.AndroidSupportInjectionModule
 import name.mharbovskyi.findchargingstation.PointsApplication
 import name.mharbovskyi.findchargingstation.data.di.NetworkModule
 import name.mharbovskyi.findchargingstation.presentation.di.module.ActivityBuilder
@@ -11,7 +12,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Component(modules = [
-    AndroidInjectionModule::class,
+    AndroidSupportInjectionModule::class,
     ApplicationModule::class,
     NetworkModule::class,
     ActivityBuilder::class

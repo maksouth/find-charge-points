@@ -14,7 +14,5 @@ internal fun ChargePoint.toMarkerOptions() =
         .position(LatLng(lat, lng))
         .title(city)
 
-//todo
-internal fun mapErrorToCode(throwable: Throwable?) = when(throwable) {
-    else -> R.string.error_other
-}
+internal fun List<ChargePoint>.toMarkerOptionsList(): List<MarkerOptions> =
+        map { it.toMarkerOptions() }

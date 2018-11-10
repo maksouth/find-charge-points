@@ -6,6 +6,7 @@ import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.AuthRepository
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
 import name.mharbovskyi.findchargingstation.common.*
+import name.mharbovskyi.findchargingstation.data.api.NewMotionApi
 
 class OAuthRepository(private val api: NewMotionApi): AuthRepository<UsernamePassword, AuthTokens> {
 
