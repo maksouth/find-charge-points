@@ -23,7 +23,10 @@ private fun AuthTokens.isValid() =
 
 fun <T> Result<T>.isAuthFailure(): Boolean =
     (this as? Failure)?.run {
-        error is BadTokenException
-                || error is NoTokensException
-                || error is AccessTokenExpired
+        error.isAuthException()
     } ?: false
+
+fun Throwable.isAuthException(): Boolean =
+    this is BadTokenException
+            || this is NoTokensException
+            || this is AccessTokenExpired

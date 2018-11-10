@@ -6,7 +6,7 @@ import name.mharbovskyi.findchargingstation.presentation.view.ChargePointsFragme
 import name.mharbovskyi.findchargingstation.presentation.view.GreetingFragment
 
 @Module
-abstract class FragmentsProvider {
+abstract class FragmentsBuilder {
 
     @ContributesAndroidInjector()
     abstract fun provideGreetingFragment(): GreetingFragment

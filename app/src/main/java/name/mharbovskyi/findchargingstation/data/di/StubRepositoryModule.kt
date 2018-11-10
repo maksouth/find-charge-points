@@ -15,6 +15,7 @@ import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
 import name.mharbovskyi.findchargingstation.domain.entity.User
 import kotlin.random.Random
 
+//todo delete
 @Module
 class StubRepositoryModule {
 //    @Provides fun provideAuthRepository(): AuthRepository<UsernamePassword, AuthTokens> = StubAuthRepository()

@@ -8,7 +8,7 @@ import name.mharbovskyi.findchargingstation.common.onFailure
 import name.mharbovskyi.findchargingstation.common.onSuccess
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.UsernamePassword
-import name.mharbovskyi.findchargingstation.domain.AuthenticateUsecase
+import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
 import name.mharbovskyi.findchargingstation.presentation.ViewFailure
 import name.mharbovskyi.findchargingstation.presentation.ViewLoading
 import name.mharbovskyi.findchargingstation.presentation.ViewState

@@ -4,7 +4,8 @@ import dagger.Module
 import dagger.Provides
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.*
-import name.mharbovskyi.findchargingstation.presentation.Router
+import name.mharbovskyi.findchargingstation.domain.usecase.AuthenticateUsecase
+import name.mharbovskyi.findchargingstation.domain.usecase.GetChargePointsUsecase
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoginViewModel
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.SplashViewModel
@@ -20,9 +21,9 @@ class ViewModelModule {
 
     @Provides
     fun provideChargePointsViewModel(
-        chargePointRepository: ChargePointRepository
+        usecase: GetChargePointsUsecase
     ): ChargePointViewModel =
-        ChargePointViewModel(chargePointRepository)
+        ChargePointViewModel(usecase)
 
     @Provides
     fun provideSplashViewModel(

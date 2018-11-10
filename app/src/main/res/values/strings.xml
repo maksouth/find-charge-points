@@ -16,4 +16,5 @@
     <string name="error_start_get_user">Cannot start normally, try later</string>
     <string name="exit">Exit</string>
     <string name="error_get_charge_points">Cannot get charge points</string>
+    <string name="error_auth_charge_points">Login to see charge points</string>
 </resources>

@@ -1,7 +1,7 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
 import android.arch.lifecycle.Observer
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.util.Log
@@ -17,13 +17,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_charge_points.*
 import name.mharbovskyi.findchargingstation.R
+import name.mharbovskyi.findchargingstation.presentation.LOGIN
 import name.mharbovskyi.findchargingstation.presentation.ViewFailure
 import name.mharbovskyi.findchargingstation.presentation.ViewLoading
 import name.mharbovskyi.findchargingstation.presentation.ViewSuccess
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import javax.inject.Inject
-
-var _counter = 0
 
 class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
 
@@ -51,20 +50,13 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
 
         viewModel.load()
         mapFragment.getMapAsync(this)
-    }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        //todo delete
-        Log.d(this::class.java.simpleName, "at ${object {}.javaClass.enclosingMethod.name}")
-        viewModel.destroy()
-    }
-
-    override fun onMapReady(map: GoogleMap) {
-        Log.d(TAG, "Map now ready")
-        googleMap = map
-
-        viewModel.loadChargePoints()
+        viewModel.navigation.observe(this, Observer {
+            when(it) {
+                is LOGIN -> showLoginScreen()
+                else -> Log.d(TAG, "Unknown destination $it")
+            }
+        })
 
         viewModel.points.observe(mapFragment, Observer {
             when(it) {
@@ -79,10 +71,32 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
                 }
             }
         })
+
+        viewModel.authError.observe(this, Observer { showAuthError(it!!) })
+
     }
 
-    private fun showError(resId: Int) =
-        Snackbar.make(map_fragment, resId, Snackbar.LENGTH_LONG).show()
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == LoginActivity.REQUEST_CODE) {
+
+            val authResult = LoginActivity.getAuthResult(data)
+            viewModel.afterAuthentication(authResult)
+
+        } else
+            super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onMapReady(map: GoogleMap) {
+        Log.d(TAG, "Map now ready")
+        googleMap = map
+
+        viewModel.loadChargePoints()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        viewModel.destroy()
+    }
 
     private fun showMarkers(data: List<MarkerOptions>) {
         Log.d(TAG, "New points received ${data.size}")
@@ -96,42 +110,15 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
         googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
     }
 
+    private fun showLoginScreen() =
+        startActivityForResult(Intent(context, LoginActivity::class.java), LoginActivity.REQUEST_CODE)
 
-    //todo DELETE SOMETIME
-    val counter = _counter++
+    private fun showError(resId: Int) =
+        Snackbar.make(map_fragment, resId, Snackbar.LENGTH_LONG).show()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.d(this::class.java.simpleName, "at $counter ${object{}.javaClass.enclosingMethod.name}")
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-        Log.d(this::class.java.simpleName, "at ${object{}.javaClass.enclosingMethod.name}")
+    private fun showAuthError(resId: Int) {
+        val snackbar = Snackbar.make(map_fragment, resId, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction(R.string.login) { viewModel.loginButtonClicked() }
+        snackbar.show()
     }
 }

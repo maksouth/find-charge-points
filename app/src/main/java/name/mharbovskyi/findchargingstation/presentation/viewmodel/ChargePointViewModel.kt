@@ -5,13 +5,13 @@ import android.arch.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.R
-import name.mharbovskyi.findchargingstation.common.onFailure
-import name.mharbovskyi.findchargingstation.common.onSuccess
-import name.mharbovskyi.findchargingstation.domain.ChargePointRepository
+import name.mharbovskyi.findchargingstation.common.*
+import name.mharbovskyi.findchargingstation.data.token.isAuthException
+import name.mharbovskyi.findchargingstation.domain.usecase.GetChargePointsUsecase
 import name.mharbovskyi.findchargingstation.presentation.*
 
 class ChargePointViewModel(
-    private val chargePointRepository: ChargePointRepository
+    private val chargePointsUsecase: GetChargePointsUsecase
 ): CoroutineViewModel() {
 
     private val TAG = ChargePointViewModel::class.java.simpleName
@@ -19,15 +19,39 @@ class ChargePointViewModel(
     private val _points by lazy { MutableLiveData<ViewState<List<MarkerOptions>>>() }
     val points: LiveData<ViewState<List<MarkerOptions>>> = _points
 
+    private val _navigation by lazy { MutableLiveData<Screen>() }
+    val navigation: LiveData<Screen> = _navigation
+
+    private val _authError by lazy { MutableLiveData<Int>() }
+    val authError: LiveData<Int> = _authError
+
     fun load() {
         _points.postValue(ViewLoading())
     }
 
     fun loadChargePoints() {
         launch {
-            chargePointRepository.getAll()
-                .onFailure { _points.postValue(ViewFailure(R.string.error_get_charge_points)) }
+            chargePointsUsecase.getChargePoints()
                 .onSuccess { _points.postValue(ViewSuccess(it.toMarkerOptionsList())) }
+                .onFailure { getChargePointsError(it) }
         }
     }
+
+    fun afterAuthentication(authResult: Result<Unit>) =
+        when(authResult) {
+            is Success -> loadChargePoints()
+            is Failure -> showAuthError()
+        }
+
+    fun loginButtonClicked() =
+        _navigation.postValue(LOGIN)
+
+    private fun showAuthError() =
+        _authError.postValue(R.string.error_auth_charge_points)
+
+    private fun getChargePointsError(throwable: Throwable) =
+        if (throwable.isAuthException()) {
+            _navigation.postValue(LOGIN)
+        } else
+            _points.postValue(ViewFailure(R.string.error_get_charge_points))
 }

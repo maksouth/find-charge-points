@@ -31,7 +31,7 @@ inline fun <T> Result<T>.onSuccess(block: (T) -> Unit): Result<T> {
     return this
 }
 
-inline fun <T> Result<T>.onFailure(block: (Throwable?) -> Unit): Result<T> {
+inline fun <T> Result<T>.onFailure(block: (Throwable) -> Unit): Result<T> {
     if (this is Failure) {
         block(error)
     }

@@ -1,17 +1,14 @@
 package name.mharbovskyi.findchargingstation.presentation.di.module
 
 import dagger.Module
-import dagger.android.AndroidInjectionModule
 import dagger.android.ContributesAndroidInjector
 import name.mharbovskyi.findchargingstation.data.di.RepositoryModule
-import name.mharbovskyi.findchargingstation.data.di.StubRepositoryModule
 import name.mharbovskyi.findchargingstation.domain.di.UsecaseModule
 import name.mharbovskyi.findchargingstation.presentation.view.LoginActivity
 import name.mharbovskyi.findchargingstation.presentation.view.MainActivity
 import name.mharbovskyi.findchargingstation.presentation.view.SplashActivity
 
 @Module(includes = [
-    StubRepositoryModule::class,
     RepositoryModule::class,
     UsecaseModule::class,
     ViewModelModule::class
@@ -19,7 +16,7 @@ import name.mharbovskyi.findchargingstation.presentation.view.SplashActivity
 abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [
-        FragmentsProvider::class,
+        FragmentsBuilder::class,
         MainActivityModule::class
     ])
     abstract fun bindMainActivity(): MainActivity
