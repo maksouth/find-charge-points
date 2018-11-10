@@ -13,11 +13,10 @@ import name.mharbovskyi.findchargingstation.presentation.view.SplashActivity
     UsecaseModule::class,
     ViewModelModule::class
 ])
-abstract class ActivityBuilder {
+internal abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [
-        FragmentsBuilder::class,
-        MainActivityModule::class
+        FragmentsBuilder::class
     ])
     abstract fun bindMainActivity(): MainActivity
 

@@ -36,6 +36,5 @@ class TokenDatasourceModule {
         PreferencesTokenDatasource(preferences)
 }
 
-const val CONSUMER_PREFERENCES = "preferences_consumer"
 const val PROVIDER_REFRESHED = "refreshed_provider"
 const val PROVIDER_PREFERENCES = "preferences_provider"

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <item
-            android:drawable="@android:color/holo_blue_dark"/>
-
-    <!--<item>-->
-        <!--<bitmap-->
-                <!--android:gravity="center"-->
-                <!--android:src="@drawable/splash_icon64"/>-->
-    <!--</item>-->
-
+    <item android:drawable="@android:color/holo_blue_dark"/>
+    <item android:width="100dp"
+          android:height="100dp"
+          android:gravity="center"
+          android:drawable="@drawable/vector_charger"/>
 </layer-list>

@@ -12,5 +12,4 @@ class CheckOAuthRepository(
 
     override suspend fun isAuthenticated(): Result<Unit> =
         requireTokenHandler.withToken { Success(Unit) }
-
 }

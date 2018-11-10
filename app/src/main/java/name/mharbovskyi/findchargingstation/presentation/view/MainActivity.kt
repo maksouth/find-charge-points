@@ -3,6 +3,8 @@ package name.mharbovskyi.findchargingstation.presentation.view
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.transition.Fade
+import android.view.Window
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
 import name.mharbovskyi.findchargingstation.R
@@ -31,12 +33,14 @@ class MainActivity : DaggerAppCompatActivity(), Router {
 
     override fun showChargePoints() {
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
             .replace(R.id.fragment_container, ChargePointsFragment(), ChargePointsFragment::class.java.simpleName)
             .commit()
     }
 
     override fun showGreeting(user: ViewUser) {
         supportFragmentManager.beginTransaction()
+            .setCustomAnimations(android.R.animator.fade_in, android.R.animator.fade_out)
             .replace(R.id.fragment_container, GreetingFragment.newInstance(user))
             .commit()
     }

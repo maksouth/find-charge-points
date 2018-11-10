@@ -1,6 +1,7 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
 import android.app.Activity
+import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
 import android.content.Intent
 import android.os.Bundle
@@ -44,7 +45,8 @@ class SplashActivity: DaggerAppCompatActivity() {
         startActivityForResult(Intent(this, LoginActivity::class.java), LoginActivity.REQUEST_CODE)
 
     private fun showGreeting(user: ViewUser) {
-        startActivity(MainActivity.createGreetingIntent(user, this))
+        startActivity(MainActivity.createGreetingIntent(user, this),
+            ActivityOptions.makeSceneTransitionAnimation(this).toBundle())
         finish()
     }
 

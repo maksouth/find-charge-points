@@ -14,8 +14,6 @@ class ChargePointViewModel(
     private val chargePointsUsecase: GetChargePointsUsecase
 ): CoroutineViewModel() {
 
-    private val TAG = ChargePointViewModel::class.java.simpleName
-
     private val _points by lazy { MutableLiveData<ViewState<List<MarkerOptions>>>() }
     val points: LiveData<ViewState<List<MarkerOptions>>> = _points
 
@@ -29,15 +27,14 @@ class ChargePointViewModel(
         _points.postValue(ViewLoading())
     }
 
-    fun loadChargePoints() {
+    fun loadChargePoints() =
         launch {
             chargePointsUsecase.getChargePoints()
                 .onSuccess { _points.postValue(ViewSuccess(it.toMarkerOptionsList())) }
                 .onFailure { getChargePointsError(it) }
         }
-    }
 
-    fun afterAuthentication(authResult: Result<Unit>) =
+    fun afterAuthentication(authResult: Result<Unit>): Any =
         when(authResult) {
             is Success -> loadChargePoints()
             is Failure -> showAuthError()

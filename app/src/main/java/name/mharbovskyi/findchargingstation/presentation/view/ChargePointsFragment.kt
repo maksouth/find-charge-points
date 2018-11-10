@@ -1,6 +1,7 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
 import android.arch.lifecycle.Observer
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -17,10 +18,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_charge_points.*
 import name.mharbovskyi.findchargingstation.R
-import name.mharbovskyi.findchargingstation.presentation.LOGIN
-import name.mharbovskyi.findchargingstation.presentation.ViewFailure
-import name.mharbovskyi.findchargingstation.presentation.ViewLoading
-import name.mharbovskyi.findchargingstation.presentation.ViewSuccess
+import name.mharbovskyi.findchargingstation.presentation.*
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import javax.inject.Inject
 
@@ -31,8 +29,15 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
     @Inject
     lateinit var viewModel: ChargePointViewModel
 
+    lateinit var router: Router
+
     lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        router = context as Router
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +58,7 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
 
         viewModel.navigation.observe(this, Observer {
             when(it) {
-                is LOGIN -> showLoginScreen()
+                is LOGIN -> router.showAuthentication()
                 else -> Log.d(TAG, "Unknown destination $it")
             }
         })
@@ -78,10 +83,8 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == LoginActivity.REQUEST_CODE) {
-
             val authResult = LoginActivity.getAuthResult(data)
             viewModel.afterAuthentication(authResult)
-
         } else
             super.onActivityResult(requestCode, resultCode, data)
     }
@@ -109,9 +112,6 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
 
         googleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds.build(), 50))
     }
-
-    private fun showLoginScreen() =
-        startActivityForResult(Intent(context, LoginActivity::class.java), LoginActivity.REQUEST_CODE)
 
     private fun showError(resId: Int) =
         Snackbar.make(map_fragment, resId, Snackbar.LENGTH_LONG).show()
