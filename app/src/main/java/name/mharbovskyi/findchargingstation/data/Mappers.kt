@@ -4,6 +4,7 @@ import name.mharbovskyi.findchargingstation.common.*
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.domain.entity.*
 import retrofit2.Response
+import java.lang.Exception
 import java.time.Instant
 
 internal fun RawChargePoint.toChargePoint(): ChargePoint =
@@ -32,8 +33,10 @@ internal fun Response<UserResponse>.toUserResult(): Result<User> =
         )
     } ?: Failure(GetUserException())
 
-private fun <T, R> baseParseResponse(response: Response<T>, block: T.() -> R): Result<R>? =
-    if(response.code() == 401) Failure(BadTokenException())
+private fun <T, R> baseParseResponse(response: Response<T>,
+                                     ex: Exception = BadTokenException(),
+                                     block: T.() -> R): Result<R>? =
+    if(response.code() == 401) Failure(ex)
     else response.body()
         ?.let(block)
         ?.let { Success(it) }

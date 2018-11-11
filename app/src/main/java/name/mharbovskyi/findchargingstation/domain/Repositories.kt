@@ -12,7 +12,7 @@ interface UserRepository {
     suspend fun getUser(): Result<User>
 }
 
-interface AuthRepository<T: Credentials, R> {
+interface AuthenticateRepository<T: Credentials, R> {
     suspend fun authenticate(credentials: T): Result<R>
 }
 

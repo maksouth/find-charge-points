@@ -29,7 +29,7 @@ class RepositoryModule {
     @Provides
     fun provideOAuthRepository(
         newMotionApi: NewMotionApi
-    ): AuthRepository<UsernamePassword, AuthTokens> =
+    ): AuthenticateRepository<UsernamePassword, AuthTokens> =
             OAuthRepository(newMotionApi)
 
     @Provides
