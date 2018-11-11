@@ -22,7 +22,7 @@
         <activity android:name=".presentation.view.MainActivity"
                   android:screenOrientation="portrait"/>
         <activity android:name=".presentation.view.LoginActivity"
-                  />
+                  android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".presentation.view.SplashActivity"
                   android:theme="@style/SplashTheme">
             <intent-filter>

@@ -35,8 +35,8 @@ class GreetingFragment : DaggerFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.also {
-            first_name.text = it.getString(FIRST_NAME)
-            last_name.text = it.getString(LAST_NAME)
+            val greeting = String.format(getString(R.string.hi), it.getString(FIRST_NAME), it.getString(LAST_NAME))
+            greeting_label.text = greeting
 
             GlobalScope.launch(Dispatchers.Main) {
                 delay(2000)
