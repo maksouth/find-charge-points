@@ -1,8 +1,7 @@
 package name.mharbovskyi.findchargingstation.domain.usecase
 
-import com.nhaarman.mockitokotlin2.verifyZeroInteractions
-import junit.framework.Assert.assertEquals
-import junit.framework.Assert.assertTrue
+import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import kotlinx.coroutines.runBlocking
 import name.mharbovskyi.findchargingstation.common.BadTokenException
 import name.mharbovskyi.findchargingstation.common.Failure
@@ -19,6 +18,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
+import org.mockito.Mockito.verifyZeroInteractions
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
