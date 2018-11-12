@@ -16,7 +16,7 @@ import name.mharbovskyi.findchargingstation.presentation.ViewSuccess
 
 class LoginViewModel(
     private val authenticateUsecase: AuthenticateUsecase<UsernamePassword, AuthTokens>
-): CoroutineViewModel() {
+): BaseViewModel() {
 
     private val _loginState by lazy{ MutableLiveData<ViewState<Unit>>() }
     val loginState: LiveData<ViewState<Unit>> = _loginState

@@ -3,6 +3,7 @@ package name.mharbovskyi.findchargingstation.presentation.view
 import android.app.Activity
 import android.app.ActivityOptions
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -11,6 +12,7 @@ import dagger.android.support.DaggerAppCompatActivity
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.*
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.SplashViewModel
+import name.mharbovskyi.findchargingstation.presentation.viewmodel.SplashViewModelFactory
 import javax.inject.Inject
 
 
@@ -19,11 +21,13 @@ class SplashActivity: DaggerAppCompatActivity() {
     private val TAG = SplashActivity::class.java.simpleName
 
     @Inject
-    lateinit var viewModel: SplashViewModel
+    lateinit var viewModelFactory: SplashViewModelFactory
+    private lateinit var viewModel: SplashViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[SplashViewModel::class.java]
         viewModel.load()
 
         viewModel.navigation.observe(this, Observer {

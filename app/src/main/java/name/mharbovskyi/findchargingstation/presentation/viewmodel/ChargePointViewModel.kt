@@ -12,7 +12,7 @@ import name.mharbovskyi.findchargingstation.presentation.*
 
 class ChargePointViewModel(
     private val chargePointsUsecase: GetChargePointsUsecase
-): CoroutineViewModel() {
+): BaseViewModel() {
 
     private val _points by lazy { MutableLiveData<ViewState<List<MarkerOptions>>>() }
     val points: LiveData<ViewState<List<MarkerOptions>>> = _points

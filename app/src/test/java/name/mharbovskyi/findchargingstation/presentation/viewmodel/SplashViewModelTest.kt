@@ -63,7 +63,7 @@ class SplashViewModelTest{
 
         viewModel.load()
         delay(500)
-        viewModel.destroy()
+        viewModel.onCleared()
 
         viewModel.coroutineContext[Job]?.join()
         assertEquals(1, cancelledCounter)
@@ -88,7 +88,7 @@ class SplashViewModelTest{
 
         viewModel.load()
         delay(500)
-        viewModel.destroy()
+        viewModel.onCleared()
 
         viewModel.coroutineContext[Job]?.join()
         assertEquals(1, cancelledCounter)

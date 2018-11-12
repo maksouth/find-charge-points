@@ -10,8 +10,7 @@ import name.mharbovskyi.findchargingstation.presentation.view.SplashActivity
 
 @Module(includes = [
     RepositoryModule::class,
-    UsecaseModule::class,
-    ViewModelModule::class
+    UsecaseModule::class
 ])
 internal abstract class ActivityBuilder {
 

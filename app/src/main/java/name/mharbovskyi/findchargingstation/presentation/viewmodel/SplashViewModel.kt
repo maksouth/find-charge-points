@@ -13,7 +13,7 @@ import name.mharbovskyi.findchargingstation.presentation.*
 class SplashViewModel(
     private val checkAuthenticationRepository: CheckAuthenticationRepository,
     private val getUserRepository: UserRepository
-) : CoroutineViewModel() {
+) : BaseViewModel() {
 
     private val _navigation by lazy { MutableLiveData<ViewState<Screen>>() }
     val navigation: LiveData<ViewState<Screen>> = _navigation

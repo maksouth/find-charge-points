@@ -9,6 +9,5 @@ class NoTokensException: BadTokenException()
 class AccessTokenExpired: BadTokenException()
 
 class GetUserException: NoSuchElementException()
-class GetChargePointsException: IllegalStateException()
 open class LoginException: Exception()
 class UserCancelledAuthenticationException: LoginException()

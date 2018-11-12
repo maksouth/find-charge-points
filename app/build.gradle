@@ -35,6 +35,8 @@ dependencies {
     testImplementation 'org.mockito:mockito-core:2.22.0'
     testImplementation 'com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0'
     testImplementation 'android.arch.core:core-testing:1.1.1'
+    //viewmodel
+    implementation "android.arch.lifecycle:extensions:1.1.1"
     //play services
     implementation 'com.google.android.gms:play-services-maps:16.0.0'
     //coroutines

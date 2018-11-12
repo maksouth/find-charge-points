@@ -1,6 +1,7 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -20,6 +21,8 @@ import kotlinx.android.synthetic.main.fragment_charge_points.*
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.*
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
+import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointsViewModelFactory
+import name.mharbovskyi.findchargingstation.presentation.viewmodel.SplashViewModel
 import javax.inject.Inject
 
 class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
@@ -27,6 +30,7 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
     private val TAG = ChargePointsFragment::class.java.simpleName
 
     @Inject
+    lateinit var viewModelFactory: ChargePointsViewModelFactory
     lateinit var viewModel: ChargePointViewModel
 
     lateinit var router: Router
@@ -53,6 +57,7 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
             .replace(R.id.map_fragment, mapFragment)
             .commit()
 
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[ChargePointViewModel::class.java]
         viewModel.load()
         mapFragment.getMapAsync(this)
 
@@ -94,11 +99,6 @@ class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {
         googleMap = map
 
         viewModel.loadChargePoints()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.destroy()
     }
 
     private fun showMarkers(data: List<MarkerOptions>) {

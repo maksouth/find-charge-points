@@ -2,6 +2,7 @@ package name.mharbovskyi.findchargingstation.presentation.view
 
 import android.app.Activity
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -14,16 +15,21 @@ import name.mharbovskyi.findchargingstation.presentation.ViewFailure
 import name.mharbovskyi.findchargingstation.presentation.ViewLoading
 import name.mharbovskyi.findchargingstation.presentation.ViewSuccess
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoginViewModel
+import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoginViewModelFactory
+import name.mharbovskyi.findchargingstation.presentation.viewmodel.SplashViewModel
 import javax.inject.Inject
 
 class LoginActivity : DaggerAppCompatActivity() {
 
     @Inject
-    lateinit var viewModel: LoginViewModel
+    lateinit var viewModelFactory: LoginViewModelFactory
+    private lateinit var viewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        viewModel = ViewModelProviders.of(this, viewModelFactory)[LoginViewModel::class.java]
 
         login_button.setOnClickListener {
             viewModel.authenticate(username_field.text.toString(), password_field.text.toString())
@@ -42,11 +48,6 @@ class LoginActivity : DaggerAppCompatActivity() {
                 }
             }
         })
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        viewModel.destroy()
     }
 
     override fun onBackPressed() = sendResult(STATUS_CANCELLED)
