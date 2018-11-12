@@ -14,13 +14,13 @@ class ChargePointViewModel(
     private val chargePointsUsecase: GetChargePointsUsecase
 ): BaseViewModel() {
 
-    private val _points by lazy { MutableLiveData<ViewState<List<MarkerOptions>>>() }
+    private val _points = MutableLiveData<ViewState<List<MarkerOptions>>>()
     val points: LiveData<ViewState<List<MarkerOptions>>> = _points
 
-    private val _navigation by lazy { MutableLiveData<Screen>() }
+    private val _navigation = MutableLiveData<Screen>()
     val navigation: LiveData<Screen> = _navigation
 
-    private val _authError by lazy { MutableLiveData<Int>() }
+    private val _authError = MutableLiveData<Int>()
     val authError: LiveData<Int> = _authError
 
     fun load() {

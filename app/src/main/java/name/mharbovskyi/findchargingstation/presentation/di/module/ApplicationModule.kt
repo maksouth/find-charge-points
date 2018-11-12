@@ -28,7 +28,7 @@ class ApplicationModule {
         context.getSharedPreferences("app_shared_prefs", Context.MODE_PRIVATE)
 
     @Provides
-    fun provideAssesManager(context: Context) =
+    fun provideAssetsManager(context: Context) =
         context.assets
 
     @Provides

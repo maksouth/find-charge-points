@@ -18,7 +18,7 @@ class LoginViewModel(
     private val authenticateUsecase: AuthenticateUsecase<UsernamePassword, AuthTokens>
 ): BaseViewModel() {
 
-    private val _loginState by lazy{ MutableLiveData<ViewState<Unit>>() }
+    private val _loginState = MutableLiveData<ViewState<Unit>>()
     val loginState: LiveData<ViewState<Unit>> = _loginState
 
     fun authenticate(username: String, password: String) = launch {

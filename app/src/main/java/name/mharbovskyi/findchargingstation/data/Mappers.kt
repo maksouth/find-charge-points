@@ -36,7 +36,7 @@ internal fun Response<UserResponse>.toUserResult(): Result<User> =
 private fun <T, R> baseParseResponse(response: Response<T>,
                                      ex: Exception = BadTokenException(),
                                      block: T.() -> R): Result<R>? =
-    if(response.code() == 401) Failure(ex)
+    if(response.code() == 401 || response.code() == 403) Failure(ex)
     else response.body()
         ?.let(block)
         ?.let { Success(it) }

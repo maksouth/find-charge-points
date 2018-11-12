@@ -15,7 +15,7 @@ class SplashViewModel(
     private val getUserRepository: UserRepository
 ) : BaseViewModel() {
 
-    private val _navigation by lazy { MutableLiveData<ViewState<Screen>>() }
+    private val _navigation = MutableLiveData<ViewState<Screen>>()
     val navigation: LiveData<ViewState<Screen>> = _navigation
 
     fun load() = launch {
