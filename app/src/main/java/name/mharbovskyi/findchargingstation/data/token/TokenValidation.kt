@@ -1,11 +1,6 @@
 package name.mharbovskyi.findchargingstation.data.token
 
-import name.mharbovskyi.findchargingstation.common.Failure
-import name.mharbovskyi.findchargingstation.common.Result
-import name.mharbovskyi.findchargingstation.common.Success
-import name.mharbovskyi.findchargingstation.common.AccessTokenExpired
-import name.mharbovskyi.findchargingstation.common.BadTokenException
-import name.mharbovskyi.findchargingstation.common.NoTokensException
+import name.mharbovskyi.findchargingstation.common.*
 import java.time.Instant
 
 object TokenValidation {

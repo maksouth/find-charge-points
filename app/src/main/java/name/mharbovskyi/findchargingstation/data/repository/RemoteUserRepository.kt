@@ -1,13 +1,13 @@
 package name.mharbovskyi.findchargingstation.data.repository
 
 import android.util.Log
+import name.mharbovskyi.findchargingstation.common.*
+import name.mharbovskyi.findchargingstation.data.api.NewMotionApi
 import name.mharbovskyi.findchargingstation.data.toUserResult
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
 import name.mharbovskyi.findchargingstation.data.token.RequireTokenHandler
 import name.mharbovskyi.findchargingstation.domain.UserRepository
-import name.mharbovskyi.findchargingstation.domain.entity.*
-import name.mharbovskyi.findchargingstation.common.*
-import name.mharbovskyi.findchargingstation.data.api.NewMotionApi
+import name.mharbovskyi.findchargingstation.domain.entity.User
 
 class RemoteUserRepository (
     private val api: NewMotionApi,

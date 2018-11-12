@@ -18,4 +18,5 @@
     <string name="error_get_charge_points">Cannot get charge points</string>
     <string name="error_auth_charge_points">Login to see charge points</string>
     <string name="hi">Hi %1$s %2$s</string>
+    <string name="ok">Ok</string>
 </resources>

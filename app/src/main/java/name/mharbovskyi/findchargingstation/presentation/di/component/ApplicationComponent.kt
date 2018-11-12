@@ -1,7 +1,6 @@
 package name.mharbovskyi.findchargingstation.presentation.di.component
 
 import dagger.Component
-import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
 import dagger.android.support.AndroidSupportInjectionModule
 import name.mharbovskyi.findchargingstation.PointsApplication

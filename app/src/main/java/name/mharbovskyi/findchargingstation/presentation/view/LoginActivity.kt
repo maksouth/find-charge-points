@@ -5,7 +5,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import android.support.v7.app.AlertDialog
 import android.view.View
 import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_login.*
@@ -16,7 +16,6 @@ import name.mharbovskyi.findchargingstation.presentation.ViewLoading
 import name.mharbovskyi.findchargingstation.presentation.ViewSuccess
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoginViewModel
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.LoginViewModelFactory
-import name.mharbovskyi.findchargingstation.presentation.viewmodel.SplashViewModel
 import javax.inject.Inject
 
 class LoginActivity : DaggerAppCompatActivity() {
@@ -44,11 +43,17 @@ class LoginActivity : DaggerAppCompatActivity() {
                 }
                 is ViewFailure -> {
                     progress.visibility = View.GONE
-                    Snackbar.make(root_layout, it.resId, Snackbar.LENGTH_LONG).show()
+                    showError(it.resId)
                 }
             }
         })
     }
+
+    private fun showError(resId: Int) =
+        AlertDialog.Builder(this, android.R.style.Theme_Material_Dialog_Alert)
+            .setMessage(resId)
+            .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+            .show()
 
     override fun onBackPressed() = sendResult(STATUS_CANCELLED)
 

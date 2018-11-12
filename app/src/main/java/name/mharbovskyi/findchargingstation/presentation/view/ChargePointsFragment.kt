@@ -22,7 +22,6 @@ import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.*
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointViewModel
 import name.mharbovskyi.findchargingstation.presentation.viewmodel.ChargePointsViewModelFactory
-import name.mharbovskyi.findchargingstation.presentation.viewmodel.SplashViewModel
 import javax.inject.Inject
 
 class ChargePointsFragment : DaggerFragment(), OnMapReadyCallback {

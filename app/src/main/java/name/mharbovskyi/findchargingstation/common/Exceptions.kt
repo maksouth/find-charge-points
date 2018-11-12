@@ -1,6 +1,5 @@
 package name.mharbovskyi.findchargingstation.common
 
-import java.lang.Exception
 import java.util.*
 
 class GetTokenException: NoSuchElementException()

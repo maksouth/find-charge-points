@@ -4,7 +4,10 @@ import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.R
-import name.mharbovskyi.findchargingstation.common.*
+import name.mharbovskyi.findchargingstation.common.Result
+import name.mharbovskyi.findchargingstation.common.Success
+import name.mharbovskyi.findchargingstation.common.onFailure
+import name.mharbovskyi.findchargingstation.common.onSuccess
 import name.mharbovskyi.findchargingstation.data.token.isAuthFailure
 import name.mharbovskyi.findchargingstation.domain.CheckAuthenticationRepository
 import name.mharbovskyi.findchargingstation.domain.UserRepository

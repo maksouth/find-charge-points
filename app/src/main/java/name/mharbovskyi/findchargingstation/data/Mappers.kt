@@ -2,9 +2,9 @@ package name.mharbovskyi.findchargingstation.data
 
 import name.mharbovskyi.findchargingstation.common.*
 import name.mharbovskyi.findchargingstation.data.token.AuthTokens
-import name.mharbovskyi.findchargingstation.domain.entity.*
+import name.mharbovskyi.findchargingstation.domain.entity.ChargePoint
+import name.mharbovskyi.findchargingstation.domain.entity.User
 import retrofit2.Response
-import java.lang.Exception
 import java.time.Instant
 
 internal fun RawChargePoint.toChargePoint(): ChargePoint =

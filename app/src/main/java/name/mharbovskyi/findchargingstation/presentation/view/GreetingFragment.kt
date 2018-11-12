@@ -10,10 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_greeting.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.ViewUser
