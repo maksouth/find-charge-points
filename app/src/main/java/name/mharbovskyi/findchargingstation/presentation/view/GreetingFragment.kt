@@ -1,6 +1,8 @@
 package name.mharbovskyi.findchargingstation.presentation.view
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +17,14 @@ import kotlinx.coroutines.launch
 import name.mharbovskyi.findchargingstation.R
 import name.mharbovskyi.findchargingstation.presentation.Router
 import name.mharbovskyi.findchargingstation.presentation.ViewUser
+import name.mharbovskyi.findchargingstation.presentation.viewmodel.GreetingViewModel
 
 
 class GreetingFragment : DaggerFragment() {
 
     lateinit var router: Router
+
+    private lateinit var viewModel: GreetingViewModel
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
@@ -37,12 +42,11 @@ class GreetingFragment : DaggerFragment() {
         arguments?.also {
             val greeting = String.format(getString(R.string.hi), it.getString(FIRST_NAME), it.getString(LAST_NAME))
             greeting_label.text = greeting
-
-            GlobalScope.launch(Dispatchers.Main) {
-                delay(2000)
-                router.showChargePoints()
-            }
         }
+
+        viewModel = ViewModelProviders.of(this).get(GreetingViewModel::class.java)
+        viewModel.load()
+        viewModel.navigation.observe(this, Observer {router.showChargePoints()})
     }
 
     companion object {
