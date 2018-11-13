@@ -22,9 +22,13 @@ class LoginViewModel(
     val loginState: LiveData<ViewState<Unit>> = _loginState
 
     fun authenticate(username: String, password: String) = launch {
-        if (validUsername(username) && validPassword(password)) {
 
-            val credentials = UsernamePassword(username, password)
+        val usernameTrimmed = username.trim()
+        val passwordTrimmed = password.trim()
+
+        if (validUsername(usernameTrimmed.trim()) && validPassword(passwordTrimmed)) {
+
+            val credentials = UsernamePassword(usernameTrimmed, passwordTrimmed)
 
             _loginState.postValue(ViewLoading())
             authenticateUsecase.authenticate(credentials)
